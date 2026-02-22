@@ -374,15 +374,36 @@ export default function ThpChart({ timestamps, series }) {
                         )}
 
                         <Line yAxisId="teplota" type="monotone" dataKey="Teplota"
-                            stroke="#1f77b4" strokeWidth={2} dot={false}
+                            stroke="#1f77b4" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = tepMM.min && payload.ts === tepMM.min.ts;
+                                const isMax = tepMM.max && payload.ts === tepMM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`tep-${payload.ts}`} cx={cx} cy={cy} value={payload.Teplota} unit="°C" decimals={1} />;
+                            } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Teplota']} />
                         <Line yAxisId="vlhkost" type="monotone" dataKey="Vlhkosť"
-                            stroke="#ff7f0e" strokeWidth={2} dot={false}
+                            stroke="#ff7f0e" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = vlhMM.min && payload.ts === vlhMM.min.ts;
+                                const isMax = vlhMM.max && payload.ts === vlhMM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`vlh-${payload.ts}`} cx={cx} cy={cy} value={payload['Vlhkosť']} unit="%" decimals={0} />;
+                            } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Vlhkosť']} />
                         <Line yAxisId="tlak" type="monotone" dataKey="Tlak"
-                            stroke="#2ca02c" strokeWidth={2} dot={false}
+                            stroke="#2ca02c" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = tlakMM.min && payload.ts === tlakMM.min.ts;
+                                const isMax = tlakMM.max && payload.ts === tlakMM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`tlak-${payload.ts}`} cx={cx} cy={cy} value={payload.Tlak} unit="hPa" decimals={1} />;
+                            } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Tlak']} />
                     </ComposedChart>
