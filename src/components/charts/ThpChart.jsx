@@ -286,7 +286,7 @@ export default function ThpChart({ timestamps, series }) {
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 col-span-1 lg:col-span-2 relative overflow-x-auto">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 col-span-1 lg:col-span-2 relative">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf Teplota / Vlhkosť / Tlak</h2>
 
             <ChartToolbar
@@ -310,7 +310,7 @@ export default function ThpChart({ timestamps, series }) {
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
             >
-                <ResponsiveContainer width="100%" height={window.innerWidth < 768 ? 250 : 350}>
+                <ResponsiveContainer width="100%" height={350}>
                     <ComposedChart data={data} margin={{ top: 10, right: 80, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="2 2" stroke="#e5e7eb" horizontal={true} vertical={true} />
 
