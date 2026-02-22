@@ -115,6 +115,31 @@ export default function ThpChart({ timestamps, series }) {
         setZoomArea(null);
     }, []);
 
+    const handleLegendClick = (e) => {
+        const key = e.dataKey;
+        setHiddenSeries(prev => ({ ...prev, [key]: !prev[key] }));
+    };
+
+    const SERIES_COLORS = { Teplota: '#1f77b4', Vlhkosť: '#ff7f0e', Tlak: '#2ca02c' };
+
+    const CustomLegend = () => (
+        <div style={{ display: 'flex', gap: '16px', paddingLeft: '70px', paddingBottom: '2px', paddingTop: '4px' }}>
+            {['Teplota', 'Vlhkosť', 'Tlak'].map(key => {
+                const hidden = hiddenSeries[key];
+                return (
+                    <span
+                        key={key}
+                        onClick={() => setHiddenSeries(prev => ({ ...prev, [key]: !prev[key] }))}
+                        style={{ cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px', color: hidden ? '#9ca3af' : '#374151', userSelect: 'none' }}
+                    >
+                        <svg width="14" height="4"><line x1="0" y1="2" x2="14" y2="2" stroke={hidden ? '#9ca3af' : SERIES_COLORS[key]} strokeWidth="2.5" /></svg>
+                        {key}
+                    </span>
+                );
+            })}
+        </div>
+    );
+
     // Box zoom handlers on chart container
     const handleMouseDown = (e) => {
         if (activeTool !== 'zoom' && activeTool !== 'pan') return;
