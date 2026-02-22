@@ -119,9 +119,9 @@ export default function ThpChart({ timestamps, series }) {
     const vlhMin  = vlhDomain.min;  const vlhMax  = vlhDomain.max;
     const tlakMin = tlakDomain.min; const tlakMax = tlakDomain.max;
 
-    const tepTicks  = makeTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT);
-    const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
-    const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
+    const tepTicks  = makeTicks(tepDomain.min,  tepDomain.max,  tepDomain.step);
+    const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.max,  vlhDomain.step);
+    const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.max, tlakDomain.step);
 
     // Save chart as PNG
     const handleSave = useCallback(() => {
