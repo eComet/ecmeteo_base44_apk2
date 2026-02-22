@@ -60,7 +60,23 @@ export default function LightChart({ timestamps, series }) {
         ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
         : allData;
 
-    const maxVal = Math.max(...data.map(d => d.Svietivosť), 1);
+    const rawMax = Math.max(...data.map(d => d.Svietivosť), 1);
+    const paddedMax = rawMax * 1.1;
+
+    const TICK_COUNT = 8;
+    function niceDomain(min, max, steps) {
+        const niceMin = Math.floor(min);
+        const niceMax = Math.ceil(max);
+        const step = Math.ceil((niceMax - niceMin) / (steps - 1));
+        return { min: niceMin, max: niceMax, step };
+    }
+    function makeTicks(niceMin, niceMax, step) {
+        const ticks = [];
+        for (let v = niceMin; v <= niceMax + 0.001; v += step) ticks.push(Math.round(v));
+        return ticks;
+    }
+    const luxDomain = niceDomain(0, paddedMax, TICK_COUNT);
+    const luxTicks = makeTicks(luxDomain.min, luxDomain.max, luxDomain.step);
 
     function shadeColor(hex, isMax) {
         const r = parseInt(hex.slice(1,3),16);
