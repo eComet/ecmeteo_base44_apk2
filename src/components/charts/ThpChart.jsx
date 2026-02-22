@@ -127,6 +127,27 @@ export default function ThpChart({ timestamps, series }) {
     const vlhMinorTicks  = makeMinorTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT, 4);
     const tlakMinorTicks = makeMinorTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT, 4);
 
+    // Custom tick: major ticks show label + longer line, minor ticks show only a short line
+    const makeCustomTick = (majorTicks, color, formatter, side = 'left') =>
+        ({ x, y, payload }) => {
+            const isMajor = majorTicks.some(t => Math.abs(t - payload.value) < 0.001);
+            const tickLen = isMajor ? 6 : 3;
+            const x1 = side === 'left' ? x : x;
+            const x2 = side === 'left' ? x - tickLen : x + tickLen;
+            return (
+                <g>
+                    <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={1} />
+                    {isMajor && (
+                        <text x={side === 'left' ? x - 8 : x + 8} y={y} dy="0.35em"
+                            textAnchor={side === 'left' ? 'end' : 'start'}
+                            fill={color} fontSize={11}>
+                            {formatter(payload.value)}
+                        </text>
+                    )}
+                </g>
+            );
+        };
+
     // Save chart as PNG
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
