@@ -81,8 +81,8 @@ export default function PmChart({ timestamps, series }) {
     const pmMin = 0;
     const pmRawMax = allPmValues.length ? Math.max(...allPmValues) : THRESHOLD_HIGH;
     const pmPaddedMax = pmRawMax * 1.1;
-    const pmDomain = niceDomain(pmMin, pmPaddedMax, TICK_COUNT);
-    const pmTicks = makeTicks(pmDomain.min, pmDomain.max, pmDomain.step);
+    const pmMax = Math.ceil(pmPaddedMax / 10) * 10;
+    const pmTicks = Array.from({ length: Math.floor(pmMax / 10) + 1 }, (_, i) => i * 10);
 
     function shadeColor(hex, isMax) {
         const r = parseInt(hex.slice(1,3),16);
