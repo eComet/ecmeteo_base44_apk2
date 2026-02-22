@@ -59,6 +59,18 @@ export default function ChartToolbar({
             >
                 <MousePointer className="w-4 h-4" />
             </button>
+
+            {/* Min/Max toggle */}
+            {setShowMinMax && (
+                <button
+                    title={showMinMax ? 'Skryť min/max' : 'Zobraziť min/max'}
+                    onClick={() => setShowMinMax(p => !p)}
+                    className={`w-8 h-8 flex items-center justify-center rounded transition-colors
+                        ${showMinMax ? 'bg-blue-100 text-blue-600' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-800'}`}
+                >
+                    <ArrowUpDown className="w-4 h-4" />
+                </button>
+            )}
         </div>
     );
 }
