@@ -2,20 +2,24 @@ export default function Layout({ children, currentPageName }) {
     return (
         <>
             <style>{`
-                html, body {
+                html {
                     width: 100%;
                     height: 100%;
+                }
+                body {
+                    width: 100vw;
+                    height: 100vh;
                     margin: 0;
                     padding: 0;
-                    overflow-x: hidden;
+                    overflow: hidden;
+                }
+                #root {
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
                 }
                 * {
                     box-sizing: border-box;
-                }
-                @supports (viewport-fit: cover) {
-                    body {
-                        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-                    }
                 }
             `}</style>
             {children}
