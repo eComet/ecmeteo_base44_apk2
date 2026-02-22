@@ -183,11 +183,7 @@ export default function PmChart({ timestamps, series }) {
                         />
                         <Tooltip content={hoverEnabled ? <CustomTooltip /> : <span />} active={hoverEnabled ? undefined : false} />
                         {showLegend && (
-                            <Legend
-                                verticalAlign="bottom"
-                                align="left"
-                                wrapperStyle={{ fontSize: '12px', paddingLeft: '60px', paddingBottom: '4px' }}
-                            />
+                            <Legend verticalAlign="top" align="left" content={<CustomLegend />} wrapperStyle={{ paddingBottom: '8px' }} />
                         )}
                         <ReferenceLine y={THRESHOLD_LOW} stroke="#3b82f6" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '20 μg/m³', fill: '#3b82f6', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID} stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '40 μg/m³', fill: '#f97316', fontSize: 10, position: 'insideTopRight' }} />
