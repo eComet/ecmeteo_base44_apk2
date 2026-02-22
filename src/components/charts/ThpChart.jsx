@@ -81,7 +81,6 @@ export default function ThpChart({ timestamps, series }) {
     const nonNullTlak = tlakData.filter(v => v != null);
 
     const TICK_COUNT = 8;
-    const MINOR_PER_INTERVAL = 4; // minor ticks between each major tick
 
     // Round domain to nice integers and compute evenly-spaced ticks
     function niceDomain(min, max, steps) {
@@ -94,26 +93,6 @@ export default function ThpChart({ timestamps, series }) {
     function makeTicks(niceMin, step, steps) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
-    function makeMinorTicks(majorTicks, minorPerInterval) {
-        const result = [];
-        for (let i = 0; i < majorTicks.length - 1; i++) {
-            const start = majorTicks[i];
-            const end = majorTicks[i + 1];
-            const subStep = (end - start) / (minorPerInterval + 1);
-            for (let j = 1; j <= minorPerInterval; j++) {
-                result.push(start + j * subStep);
-            }
-        }
-        return result;
-    }
-
-    // Custom tick component for minor ticks (short line, no label)
-    const MinorTick = ({ x, y, payload, orientation }) => {
-        const len = 3;
-        const x1 = orientation === 'left' ? x - len : x;
-        const x2 = orientation === 'left' ? x : x + len;
-        return <line x1={x1} y1={y} x2={x2} y2={y} stroke="#9ca3af" strokeWidth={1} />;
-    };
 
     const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
     const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
@@ -133,10 +112,6 @@ export default function ThpChart({ timestamps, series }) {
     const tepTicks  = makeTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT);
     const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
     const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
-
-    const tepMinorTicks  = makeMinorTicks(tepTicks,  MINOR_PER_INTERVAL);
-    const vlhMinorTicks  = makeMinorTicks(vlhTicks,  MINOR_PER_INTERVAL);
-    const tlakMinorTicks = makeMinorTicks(tlakTicks, MINOR_PER_INTERVAL);
 
     // Save chart as PNG
     const handleSave = useCallback(() => {
@@ -334,43 +309,6 @@ export default function ThpChart({ timestamps, series }) {
                             width={85}
                             tickFormatter={v => `${Math.round(v)} hPa`}
                             label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
-                        />
-
-                        {/* Minor ticks for Teplota (left) */}
-                        <YAxis
-                            yAxisId="teplota-minor"
-                            orientation="left"
-                            domain={[tepMin, tepMax]}
-                            ticks={tepMinorTicks}
-                            tick={<MinorTick orientation="left" />}
-                            axisLine={false}
-                            tickLine={false}
-                            width={70}
-                            tickFormatter={() => ''}
-                        />
-                        {/* Minor ticks for Vlhkosť (right, first) */}
-                        <YAxis
-                            yAxisId="vlhkost-minor"
-                            orientation="right"
-                            domain={[vlhMin, vlhMax]}
-                            ticks={vlhMinorTicks}
-                            tick={<MinorTick orientation="right" />}
-                            axisLine={false}
-                            tickLine={false}
-                            width={65}
-                            tickFormatter={() => ''}
-                        />
-                        {/* Minor ticks for Tlak (right, second) */}
-                        <YAxis
-                            yAxisId="tlak-minor"
-                            orientation="right"
-                            domain={[tlakMin, tlakMax]}
-                            ticks={tlakMinorTicks}
-                            tick={<MinorTick orientation="right" />}
-                            axisLine={false}
-                            tickLine={false}
-                            width={85}
-                            tickFormatter={() => ''}
                         />
 
                         <Tooltip
