@@ -336,6 +336,43 @@ export default function ThpChart({ timestamps, series }) {
                             label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
                         />
 
+                        {/* Minor ticks for Teplota (left) */}
+                        <YAxis
+                            yAxisId="teplota-minor"
+                            orientation="left"
+                            domain={[tepMin, tepMax]}
+                            ticks={tepMinorTicks}
+                            tick={<MinorTick orientation="left" />}
+                            axisLine={false}
+                            tickLine={false}
+                            width={70}
+                            tickFormatter={() => ''}
+                        />
+                        {/* Minor ticks for Vlhkosť (right, first) */}
+                        <YAxis
+                            yAxisId="vlhkost-minor"
+                            orientation="right"
+                            domain={[vlhMin, vlhMax]}
+                            ticks={vlhMinorTicks}
+                            tick={<MinorTick orientation="right" />}
+                            axisLine={false}
+                            tickLine={false}
+                            width={65}
+                            tickFormatter={() => ''}
+                        />
+                        {/* Minor ticks for Tlak (right, second) */}
+                        <YAxis
+                            yAxisId="tlak-minor"
+                            orientation="right"
+                            domain={[tlakMin, tlakMax]}
+                            ticks={tlakMinorTicks}
+                            tick={<MinorTick orientation="right" />}
+                            axisLine={false}
+                            tickLine={false}
+                            width={85}
+                            tickFormatter={() => ''}
+                        />
+
                         <Tooltip
                             content={hoverEnabled ? <CustomTooltip /> : null}
                             active={hoverEnabled ? undefined : false}
