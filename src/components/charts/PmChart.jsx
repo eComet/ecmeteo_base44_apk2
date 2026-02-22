@@ -209,7 +209,7 @@ export default function PmChart({ timestamps, series }) {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 chart-title-mobile">Graf PM častice</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-4 ">Graf PM častice</h2>
             <ChartToolbar
                 activeTool={activeTool} setActiveTool={setActiveTool}
                 showLegend={showLegend} setShowLegend={setShowLegend}
