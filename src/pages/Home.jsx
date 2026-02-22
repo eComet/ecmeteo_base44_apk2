@@ -13,24 +13,12 @@ export default function Home() {
     const fetchData = useCallback(async () => {
         setLoading(true);
         setError(null);
-        const response = await fetch('https://meteo.ecmeteo.org:9080/api/get-meta', {
-            headers: { 'Authorization': 'Bearer GvYkwfJ7Zqz2yKIo4LLe' }
-        });
-        const arrayBuffer = await response.arrayBuffer();
-        const zip = await JSZip.loadAsync(arrayBuffer);
-        let jsonData = null;
-        for (const [filename, file] of Object.entries(zip.files)) {
-            if (!file.dir && filename.endsWith('.json')) {
-                const content = await file.async('string');
-                jsonData = JSON.parse(content);
-                break;
-            }
-        }
-        if (!jsonData) {
-            setError('Žiadny JSON súbor nenájdený v ZIP archíve');
-        } else {
-            setData(jsonData);
+        try {
+            const response = await base44.functions.invoke('fetchSensorData', {});
+            setData(response.data);
             setLastUpdated(new Date());
+        } catch (err) {
+            setError(err.message || 'Nepodarilo sa načítať dáta');
         }
         setLoading(false);
     }, []);
