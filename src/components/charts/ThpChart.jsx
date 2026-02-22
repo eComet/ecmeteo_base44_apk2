@@ -383,9 +383,10 @@ export default function ThpChart({ timestamps, series }) {
                                  x1={zoomArea.x1}
                                  x2={zoomArea.x2}
                                  stroke="#3b82f6"
-                                 strokeWidth={2}
+                                 strokeWidth={3}
+                                 strokeDasharray="5 5"
                                  fill="#3b82f6"
-                                 fillOpacity={0.15}
+                                 fillOpacity={0.2}
                              />
                          )}
 
