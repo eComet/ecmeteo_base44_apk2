@@ -220,7 +220,7 @@ export default function LightChart({ timestamps, series }) {
                         />
                         <Tooltip content={hoverEnabled ? <CustomTooltip /> : <span />} active={hoverEnabled ? undefined : false} />
                         {showLegend && (
-                            <Legend verticalAlign="top" align="left" content={<CustomLegend />} wrapperStyle={{ paddingBottom: '8px' }} />
+                            <Legend verticalAlign="bottom" align="center" content={<CustomLegend />} wrapperStyle={{ paddingTop: '12px' }} />
                         )}
                         <Area type="monotone" dataKey="low"  fill="#93c5fd" stroke="none" fillOpacity={0.5} legendType="none" isAnimationActive={false} />
                         <Area type="monotone" dataKey="mid"  fill="#fde68a" stroke="none" fillOpacity={0.4} legendType="none" isAnimationActive={false} />
