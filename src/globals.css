@@ -3,7 +3,7 @@ css
 
 @media (max-width: 768px) {
   .bg-white.rounded-2xl {
-    transform: rotate(180deg);
+    transform: rotate(270deg);
     transform-origin: center;
     width: 100vh;
     height: auto;
