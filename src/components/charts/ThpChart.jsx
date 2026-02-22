@@ -229,8 +229,9 @@ export default function ThpChart({ timestamps, series }) {
                             tick={{ fontSize: 11, fill: '#1f77b4' }}
                             axisLine={{ stroke: '#1f77b4' }}
                             tickLine={false}
-                            width={55}
+                            width={70}
                             tickFormatter={v => `${v.toFixed(1)} °C`}
+                            label={{ value: 'Teplota (°C)', angle: -90, position: 'insideLeft', offset: 15, fill: '#1f77b4', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="vlhkost"
@@ -239,8 +240,9 @@ export default function ThpChart({ timestamps, series }) {
                             tick={{ fontSize: 11, fill: '#ff7f0e' }}
                             axisLine={{ stroke: '#ff7f0e' }}
                             tickLine={false}
-                            width={60}
+                            width={65}
                             tickFormatter={v => `${v.toFixed(0)} %`}
+                            label={{ value: 'Vlhkosť (%)', angle: 90, position: 'insideRight', offset: 15, fill: '#ff7f0e', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="tlak"
@@ -249,8 +251,9 @@ export default function ThpChart({ timestamps, series }) {
                             tick={{ fontSize: 11, fill: '#2ca02c' }}
                             axisLine={{ stroke: '#2ca02c' }}
                             tickLine={false}
-                            width={75}
+                            width={85}
                             tickFormatter={v => `${v.toFixed(1)} hPa`}
+                            label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
                         />
 
                         <Tooltip
