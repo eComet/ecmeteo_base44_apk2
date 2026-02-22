@@ -47,6 +47,7 @@ export default function PmChart({ timestamps, series }) {
     const panStart = useRef(null);
     const panRangeAtStart = useRef(null);
     const chartRef = useRef(null);
+    const chartWrapperRef = useRef(null);
 
     if (!timestamps?.length || !series) return null;
 
