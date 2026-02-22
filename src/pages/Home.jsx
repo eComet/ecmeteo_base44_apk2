@@ -108,12 +108,42 @@ export default function Home() {
                     </div>
                 )}
 
-                {/* Charts */}
-                {!loading && !error && data && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <ThpChart   timestamps={timestamps} series={chartsById['thp']?.series} />
-                        <PmChart    timestamps={timestamps} series={chartsById['pm']?.series} />
-                        <LightChart timestamps={timestamps} series={chartsById['light']?.series} />
+                {/* Chart selector list */}
+                {!loading && !error && data && !expandedChart && (
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Dostupné grafy</h2>
+                        <div className="space-y-2">
+                            {[
+                                { id: 'thp', label: 'Graf Teplota / Vlhkosť / Tlak' },
+                                { id: 'pm', label: 'Graf PM častice' },
+                                { id: 'light', label: 'Graf Svietivosť' }
+                            ].map(chart => (
+                                <button
+                                    key={chart.id}
+                                    onClick={() => setExpandedChart(chart.id)}
+                                    className="w-full text-left px-4 py-3 rounded-lg bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-600 font-medium transition-colors border border-transparent hover:border-blue-200"
+                                >
+                                    {chart.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Expanded chart view */}
+                {!loading && !error && data && expandedChart && (
+                    <div>
+                        <button
+                            onClick={() => setExpandedChart(null)}
+                            className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors"
+                        >
+                            ← Späť na výber grafov
+                        </button>
+                        <div className="grid grid-cols-1 gap-6">
+                            {expandedChart === 'thp' && <ThpChart timestamps={timestamps} series={chartsById['thp']?.series} />}
+                            {expandedChart === 'pm' && <PmChart timestamps={timestamps} series={chartsById['pm']?.series} />}
+                            {expandedChart === 'light' && <LightChart timestamps={timestamps} series={chartsById['light']?.series} />}
+                        </div>
                     </div>
                 )}
             </main>
