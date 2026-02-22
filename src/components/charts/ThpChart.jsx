@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import {
     ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-    ResponsiveContainer, Legend, ReferenceArea
+    ResponsiveContainer, Legend, ReferenceArea, ReferenceLine
 } from 'recharts';
 import { format } from 'date-fns';
 import ChartToolbar from './ChartToolbar';
