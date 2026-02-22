@@ -71,11 +71,7 @@ export default function Home() {
 
                 {/* Meta info */}
                 {data && (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-                        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-                            <p className="text-xs text-gray-500 mb-1">Počet záznamov</p>
-                            <p className="text-2xl font-bold text-gray-900">{data.record_count?.toLocaleString()}</p>
-                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
                             <p className="text-xs text-gray-500 mb-1">Vygenerované</p>
                             <p className="text-sm font-semibold text-gray-900 mt-1">
