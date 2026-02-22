@@ -83,6 +83,22 @@ export default function PmChart({ timestamps, series }) {
 
     const handleReset = useCallback(() => { setZoomRange(null); setZoomArea(null); }, []);
 
+    const PM_COLORS = { 'PM1.0': '#1f77b4', 'PM2.5': '#ff7f0e', 'PM10': '#2ca02c' };
+    const CustomLegend = () => (
+        <div style={{ display: 'flex', gap: '16px', paddingLeft: '60px', paddingBottom: '2px', paddingTop: '4px' }}>
+            {['PM1.0', 'PM2.5', 'PM10'].map(key => {
+                const hidden = hiddenSeries[key];
+                return (
+                    <span key={key} onClick={() => setHiddenSeries(prev => ({ ...prev, [key]: !prev[key] }))}
+                        style={{ cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px', color: hidden ? '#9ca3af' : '#374151', userSelect: 'none' }}>
+                        <svg width="14" height="4"><line x1="0" y1="2" x2="14" y2="2" stroke={hidden ? '#9ca3af' : PM_COLORS[key]} strokeWidth="2.5" /></svg>
+                        {key}
+                    </span>
+                );
+            })}
+        </div>
+    );
+
     const getXFracTs = (e) => {
         const chart = e.currentTarget.querySelector('.recharts-wrapper');
         if (!chart) return null;
