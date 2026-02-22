@@ -187,7 +187,7 @@ export default function LightChart({ timestamps, series }) {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 chart-title-mobile">Graf Svietivosť</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf Svietivosť</h2>
             <ChartToolbar
                 activeTool={activeTool} setActiveTool={setActiveTool}
                 showLegend={showLegend} setShowLegend={setShowLegend}
@@ -195,7 +195,7 @@ export default function LightChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none' }} className="chart-container-mobile"
+            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
                 <ResponsiveContainer width="100%" height={320}>
