@@ -123,6 +123,10 @@ export default function ThpChart({ timestamps, series }) {
     const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
     const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
 
+    const tepMinorTicks  = makeMinorTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT, 4);
+    const vlhMinorTicks  = makeMinorTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT, 4);
+    const tlakMinorTicks = makeMinorTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT, 4);
+
     // Save chart as PNG
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
