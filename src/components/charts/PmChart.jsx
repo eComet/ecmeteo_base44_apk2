@@ -189,9 +189,9 @@ export default function PmChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_MID} stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '40 μg/m³', fill: '#f97316', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#a855f7" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 μg/m³', fill: '#a855f7', fontSize: 10, position: 'insideTopRight' }} />
                         {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} fill="#3b82f6" fillOpacity={0.15} strokeOpacity={0.3} />}
-                        <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} />
-                        <Line type="monotone" dataKey="PM2.5" stroke="#ff7f0e" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} />
-                        <Line type="monotone" dataKey="PM10"  stroke="#2ca02c" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} />
+                        <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM1.0']} />
+                        <Line type="monotone" dataKey="PM2.5" stroke="#ff7f0e" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM2.5']} />
+                        <Line type="monotone" dataKey="PM10"  stroke="#2ca02c" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM10']} />
                     </LineChart>
                 </ResponsiveContainer>
             </div>
