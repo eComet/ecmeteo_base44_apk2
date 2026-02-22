@@ -223,9 +223,33 @@ export default function PmChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_MID} stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '40 μg/m³', fill: '#f97316', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#a855f7" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 μg/m³', fill: '#a855f7', fontSize: 10, position: 'insideTopRight' }} />
                         {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} fill="#3b82f6" fillOpacity={0.15} strokeOpacity={0.3} />}
-                        <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM1.0']} />
-                        <Line type="monotone" dataKey="PM2.5" stroke="#ff7f0e" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM2.5']} />
-                        <Line type="monotone" dataKey="PM10"  stroke="#2ca02c" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM10']} />
+                        <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = pm10MM2.min && payload.ts === pm10MM2.min.ts;
+                                const isMax = pm10MM2.max && payload.ts === pm10MM2.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`pm10-${payload.ts}`} cx={cx} cy={cy} value={payload['PM1.0']} unit="μg/m³" color="#1f77b4" isMax={isMax} />;
+                            } : false}
+                            isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM1.0']} />
+                        <Line type="monotone" dataKey="PM2.5" stroke="#ff7f0e" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = pm25MM.min && payload.ts === pm25MM.min.ts;
+                                const isMax = pm25MM.max && payload.ts === pm25MM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`pm25-${payload.ts}`} cx={cx} cy={cy} value={payload['PM2.5']} unit="μg/m³" color="#ff7f0e" isMax={isMax} />;
+                            } : false}
+                            isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM2.5']} />
+                        <Line type="monotone" dataKey="PM10" stroke="#2ca02c" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = pm10MM.min && payload.ts === pm10MM.min.ts;
+                                const isMax = pm10MM.max && payload.ts === pm10MM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`pm10h-${payload.ts}`} cx={cx} cy={cy} value={payload['PM10']} unit="μg/m³" color="#2ca02c" isMax={isMax} />;
+                            } : false}
+                            isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['PM10']} />
                     </LineChart>
                 </ResponsiveContainer>
             </div>
