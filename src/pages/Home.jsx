@@ -49,7 +49,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-1 flex-shrink-0">
                         {lastUpdated && (
-                            <div className="flex items-center gap-0.5 text-xs text-gray-500 hidden sm:flex">
+                            <div className="flex items-center gap-0.5 text-xs text-gray-500">
                                 <Clock className="w-3 h-3" />
                                 <span>{format(lastUpdated, 'HH:mm:ss')}</span>
                             </div>
