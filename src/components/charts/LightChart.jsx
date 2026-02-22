@@ -222,9 +222,13 @@ export default function LightChart({ timestamps, series }) {
                             label={{ value: 'Čas', position: 'insideBottom', offset: -10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <YAxis
-                            domain={[0, maxVal + 2]}
+                            domain={[luxDomain.min, luxDomain.max]}
+                            ticks={luxTicks}
                             tick={{ fontSize: 11, fill: '#9ca3af' }}
-                            axisLine={false} tickLine={false} width={65}
+                            axisLine={{ stroke: '#d1d5db' }}
+                            tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
+                            width={65}
+                            tickFormatter={v => `${Math.round(v)}`}
                             label={{ value: 'Svietivosť (lux)', angle: -90, position: 'insideLeft', offset: 10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <Tooltip content={hoverEnabled ? <CustomTooltip /> : <span />} active={hoverEnabled ? undefined : false} />
