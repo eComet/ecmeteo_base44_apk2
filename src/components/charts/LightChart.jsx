@@ -199,7 +199,7 @@ export default function LightChart({ timestamps, series }) {
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
                 <ResponsiveContainer width="100%" height={320}>
-                    <ComposedChart data={data} margin={{ top: 8, right: 20, left: 0, bottom: 30 }}>
+                    <ComposedChart data={data} margin={{ top: 8, right: 30, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis
                             dataKey="ts"
