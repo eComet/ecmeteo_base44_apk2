@@ -18,6 +18,25 @@ css
     width: 100vh;
     height: 100vw;
   }
+}
+
+@media (max-width: 768px) {
+  html {
+    transform: rotate(90deg);
+    transform-origin: 0 0;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  body {
+    margin: 0;
+    width: 100vh;
+    height: 100vw;
+  }
 
   .chart-container-mobile {
     transform: rotate(-90deg);
