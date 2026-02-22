@@ -82,6 +82,21 @@ export default function LightChart({ timestamps, series }) {
 
     const handleReset = useCallback(() => { setZoomRange(null); setZoomArea(null); }, []);
 
+    const CustomLegend = () => (
+        <div style={{ display: 'flex', gap: '16px', paddingLeft: '70px', paddingBottom: '2px', paddingTop: '4px' }}>
+            {['Svietivosť'].map(key => {
+                const hidden = hiddenSeries[key];
+                return (
+                    <span key={key} onClick={() => setHiddenSeries(prev => ({ ...prev, [key]: !prev[key] }))}
+                        style={{ cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '5px', color: hidden ? '#9ca3af' : '#374151', userSelect: 'none' }}>
+                        <svg width="14" height="4"><line x1="0" y1="2" x2="14" y2="2" stroke={hidden ? '#9ca3af' : '#ff7f0e'} strokeWidth="2.5" /></svg>
+                        {key}
+                    </span>
+                );
+            })}
+        </div>
+    );
+
     const getXFracTs = (e) => {
         const chart = e.currentTarget.querySelector('.recharts-wrapper');
         if (!chart) return null;
