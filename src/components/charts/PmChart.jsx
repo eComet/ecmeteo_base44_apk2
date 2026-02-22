@@ -168,7 +168,7 @@ export default function PmChart({ timestamps, series }) {
         if (activeTool === 'zoom') {
             const r = getXFracTs(e); if (!r) return;
             isSelecting.current = true;
-            setZoomArea({ x1: r.tsVal, x2: r.tsVal });
+            setZoomArea({ px1: r.clientX, py1: r.clientY, px2: r.clientX, py2: r.clientY, rect: r.rect });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
