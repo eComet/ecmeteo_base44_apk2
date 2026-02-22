@@ -413,7 +413,12 @@ export default function ThpChart({ timestamps, series }) {
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Tlak']} />
                     </ComposedChart>
                 </ResponsiveContainer>
-            </div>
-        </div>
-    );
-}
+                {zoomArea && (
+                    <svg style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 10 }} width="100%" height="100%">
+                        <rect x={Math.min(zoomArea.x1, zoomArea.x2)} y="0" width={Math.abs(zoomArea.x2 - zoomArea.x1)} height="100%" fill="rgba(219, 234, 254, 0.6)" stroke="#1e40af" strokeWidth="3" strokeDasharray="8 4" />
+                    </svg>
+                )}
+                </div>
+                </div>
+                );
+                }
