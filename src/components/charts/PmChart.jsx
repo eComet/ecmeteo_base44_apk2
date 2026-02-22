@@ -247,7 +247,7 @@ export default function PmChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_LOW} stroke="#3b82f6" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '20 μg/m³', fill: '#3b82f6', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID} stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '40 μg/m³', fill: '#f97316', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#a855f7" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 μg/m³', fill: '#a855f7', fontSize: 10, position: 'insideTopRight' }} />
-                        {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} stroke="#1e40af" strokeWidth={4} strokeDasharray="8 4" fill="#dbeafe" fillOpacity={0.5} />}
+
                         <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2}
                             dot={showMinMax ? (props) => {
                                 const { cx, cy, payload } = props;
