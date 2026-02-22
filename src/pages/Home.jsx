@@ -29,7 +29,8 @@ export default function Home() {
         fetchData();
     }, [fetchData]);
 
-    const firstChart = data?.charts?.[0] ?? null;
+    const chartsById = data?.charts ? Object.fromEntries(data.charts.map(c => [c.id, c])) : {};
+    const timestamps = data?.timestamps ?? [];
 
     return (
         <div className="min-h-screen bg-gray-50">
