@@ -96,11 +96,11 @@ export default function ThpChart({ timestamps, series }) {
         return ticks;
     }
 
-    function paddedRange(values, padFrac = 0.2) {
+    function paddedRange(values) {
         const min = Math.min(...values);
         const max = Math.max(...values);
         const span = max - min || 1;
-        return { min: min - span * 0.05, max: max + span * padFrac };
+        return { min: min - span * 0.05, max: max + span * 0.1 };
     }
 
     const tepRange  = nonNullTep.length  ? paddedRange(nonNullTep)  : { min: -5,  max: 40   };
