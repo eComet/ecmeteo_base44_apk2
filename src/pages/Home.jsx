@@ -66,8 +66,32 @@ export default function Home() {
                 </div>
             </header>
 
-            {/* Content */}
-            <main className="max-w-6xl mx-auto px-6 py-8">
+            {/* Portrait mode message */}
+                        <style>{`
+                            @media (orientation: portrait) {
+                                .charts-container {
+                                    display: none !important;
+                                }
+                                .portrait-message {
+                                    display: flex !important;
+                                }
+                            }
+                            @media (orientation: landscape) {
+                                .portrait-message {
+                                    display: none !important;
+                                }
+                            }
+                        `}</style>
+
+                        {/* Portrait Only Message */}
+                        <div className="portrait-message hidden min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6">
+                            <RotateCw className="w-24 h-24 text-blue-600 mb-6 animate-spin" />
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Landscape mode required</h2>
+                            <p className="text-lg text-gray-600 text-center">please rotate your phone →</p>
+                        </div>
+
+                        {/* Content */}
+                        <main className="charts-container max-w-6xl mx-auto px-6 py-8">
 
                 {/* Loading */}
                 {loading && (
