@@ -1,5 +1,5 @@
 import React from 'react';
-import { Move, ZoomIn, RotateCcw, Download, Eye, EyeOff, MousePointer } from 'lucide-react';
+import { Move, ZoomIn, RotateCcw, Download, Eye, EyeOff, MousePointer, ArrowUpDown } from 'lucide-react';
 
 const tools = [
     { id: 'pan',    Icon: Move,         title: 'Pan – posúvanie grafu' },
@@ -12,6 +12,7 @@ export default function ChartToolbar({
     activeTool, setActiveTool,
     showLegend, setShowLegend,
     hoverEnabled, setHoverEnabled,
+    showMinMax, setShowMinMax,
     onReset, onSave,
 }) {
     const handleClick = (tool) => {
