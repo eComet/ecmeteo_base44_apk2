@@ -107,9 +107,13 @@ export default function Home() {
                     </div>
                 )}
 
-                {/* Chart */}
-                {!loading && !error && firstChart && (
-                    <MeteoChart chart={firstChart} timestamps={data.timestamps} />
+                {/* Charts */}
+                {!loading && !error && data && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <ThpChart   timestamps={timestamps} series={chartsById['thp']?.series} />
+                        <PmChart    timestamps={timestamps} series={chartsById['pm']?.series} />
+                        <LightChart timestamps={timestamps} series={chartsById['light']?.series} />
+                    </div>
                 )}
             </main>
         </div>
