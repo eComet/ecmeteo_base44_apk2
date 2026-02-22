@@ -37,30 +37,30 @@ export default function Home() {
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
             <header className="bg-white border-b border-gray-200 shadow-sm">
-                <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                            <CloudRain className="w-5 h-5 text-white" />
+                <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <CloudRain className="w-4 h-4 text-white" />
                         </div>
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-900">MeteoStation</h1>
-                            <p className="text-xs text-gray-500">Monitorovanie senzorov v reálnom čase</p>
+                        <div className="min-w-0">
+                            <h1 className="text-sm font-bold text-gray-900 truncate">MeteoStation</h1>
+                            <p className="text-xs text-gray-500 truncate hidden sm:block">Monitorovanie v reálnom čase</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 flex-shrink-0">
                         {lastUpdated && (
-                            <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                                <Clock className="w-4 h-4" />
-                                <span>Aktualizované: {format(lastUpdated, 'HH:mm:ss')}</span>
+                            <div className="flex items-center gap-0.5 text-xs text-gray-500 hidden sm:flex">
+                                <Clock className="w-3 h-3" />
+                                <span>{format(lastUpdated, 'HH:mm:ss')}</span>
                             </div>
                         )}
                         <button
                             onClick={fetchData}
                             disabled={loading}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-sm font-medium rounded-lg transition-colors"
+                            className="flex items-center gap-1 px-2 py-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-medium rounded transition-colors"
                         >
-                            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                            Obnoviť
+                            <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                            <span className="hidden sm:inline">Obnoviť</span>
                         </button>
                     </div>
                 </div>
