@@ -198,7 +198,7 @@ export default function ThpChart({ timestamps, series }) {
     const SERIES_COLORS = { Teplota: '#1f77b4', Vlhkosť: '#ff7f0e', Tlak: '#2ca02c' };
 
     const CustomLegend = () => (
-        <div style={{ display: 'flex', gap: '16px', paddingLeft: '70px', paddingBottom: '2px', paddingTop: '4px' }}>
+        <div style={{ display: 'flex', gap: '16px', paddingLeft: '10px', paddingBottom: '8px', paddingTop: '4px' }}>
             {['Teplota', 'Vlhkosť', 'Tlak'].map(key => {
                 const hidden = hiddenSeries[key];
                 return (
