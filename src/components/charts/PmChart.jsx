@@ -40,6 +40,7 @@ export default function PmChart({ timestamps, series }) {
     const [showLegend, setShowLegend] = useState(true);
     const [hoverEnabled, setHoverEnabled] = useState(true);
     const [hiddenSeries, setHiddenSeries] = useState({});
+    const [showMinMax, setShowMinMax] = useState(false);
     const [zoomArea, setZoomArea] = useState(null);
     const [zoomRange, setZoomRange] = useState(null);
     const isSelecting = useRef(false);
