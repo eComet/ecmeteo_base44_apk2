@@ -382,11 +382,11 @@ export default function ThpChart({ timestamps, series }) {
                                  yAxisId="teplota"
                                  x1={zoomArea.x1}
                                  x2={zoomArea.x2}
-                                 stroke="#3b82f6"
-                                 strokeWidth={3}
-                                 strokeDasharray="5 5"
-                                 fill="#3b82f6"
-                                 fillOpacity={0.2}
+                                 stroke="#1e40af"
+                                 strokeWidth={4}
+                                 strokeDasharray="8 4"
+                                 fill="#dbeafe"
+                                 fillOpacity={0.5}
                              />
                          )}
 
