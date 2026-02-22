@@ -179,7 +179,7 @@ export default function PmChart({ timestamps, series }) {
     const handleMouseMove = (e) => {
         if (activeTool === 'zoom' && isSelecting.current) {
             const r = getXFracTs(e); if (!r) return;
-            setZoomArea(prev => ({ ...prev, x2: r.tsVal }));
+            setZoomArea(prev => ({ ...prev, px2: r.clientX, py2: r.clientY }));
         }
         if (activeTool === 'pan' && panStart.current !== null) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
