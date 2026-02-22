@@ -376,19 +376,7 @@ export default function ThpChart({ timestamps, series }) {
                             />
                         )}
 
-                        {/* Zoom selection area */}
-                         {zoomArea && (
-                             <ReferenceArea
-                                 yAxisId="teplota"
-                                 x1={zoomArea.x1}
-                                 x2={zoomArea.x2}
-                                 stroke="#1e40af"
-                                 strokeWidth={4}
-                                 strokeDasharray="8 4"
-                                 fill="#dbeafe"
-                                 fillOpacity={0.5}
-                             />
-                         )}
+                        {/* Zoom selection area - rendered outside ComposedChart */}
 
                         <Line yAxisId="teplota" type="monotone" dataKey="Teplota"
                             stroke="#1f77b4" strokeWidth={2}
