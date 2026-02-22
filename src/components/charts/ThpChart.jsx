@@ -93,6 +93,16 @@ export default function ThpChart({ timestamps, series }) {
     function makeTicks(niceMin, step, steps) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
+    function makeMinorTicks(niceMin, step, steps, minorCount) {
+        const ticks = [];
+        const minorStep = step / (minorCount + 1);
+        for (let i = 0; i < steps - 1; i++) {
+            for (let j = 1; j <= minorCount; j++) {
+                ticks.push(niceMin + i * step + j * minorStep);
+            }
+        }
+        return ticks;
+    }
 
     const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
     const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
