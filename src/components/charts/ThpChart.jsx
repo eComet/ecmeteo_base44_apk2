@@ -369,10 +369,10 @@ export default function ThpChart({ timestamps, series }) {
 
                         {showLegend && (
                             <Legend
-                                verticalAlign="top"
-                                align="left"
+                                verticalAlign="bottom"
+                                align="center"
                                 content={<CustomLegend />}
-                                wrapperStyle={{ paddingBottom: '8px' }}
+                                wrapperStyle={{ paddingTop: '12px' }}
                             />
                         )}
 
