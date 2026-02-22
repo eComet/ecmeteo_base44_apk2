@@ -208,8 +208,8 @@ export default function PmChart({ timestamps, series }) {
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative" style={{ transform: 'rotate(270deg)', transformOrigin: 'center', width: '100vh', height: 'auto' }}>
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 ">Graf PM častice</h2>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf PM častice</h2>
             <ChartToolbar
                 activeTool={activeTool} setActiveTool={setActiveTool}
                 showLegend={showLegend} setShowLegend={setShowLegend}

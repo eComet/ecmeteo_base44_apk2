@@ -69,6 +69,26 @@ export default function Home() {
             {/* Content */}
             <main className="max-w-6xl mx-auto px-6 py-8">
 
+                {/* Meta info */}
+                {data && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+                        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+                            <p className="text-xs text-gray-500 mb-1">Počet záznamov</p>
+                            <p className="text-2xl font-bold text-gray-900">{data.record_count?.toLocaleString()}</p>
+                        </div>
+                        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+                            <p className="text-xs text-gray-500 mb-1">Vygenerované</p>
+                            <p className="text-sm font-semibold text-gray-900 mt-1">
+                                {data.generated_at ? format(new Date(data.generated_at), 'dd.MM.yyyy HH:mm') : '–'}
+                            </p>
+                        </div>
+                        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+                            <p className="text-xs text-gray-500 mb-1">Verzia</p>
+                            <p className="text-2xl font-bold text-gray-900">{data.version ?? '–'}</p>
+                        </div>
+                    </div>
+                )}
+
                 {/* Loading */}
                 {loading && (
                     <div className="flex flex-col items-center justify-center py-24 gap-4">
@@ -112,14 +132,14 @@ export default function Home() {
 
                 {/* Expanded chart view */}
                 {!loading && !error && data && expandedChart && (
-                    <div className="flex flex-col items-center justify-center min-h-screen lg:min-h-auto">
+                    <div>
                         <button
                             onClick={() => setExpandedChart(null)}
                             className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors"
                         >
                             ← Späť na výber grafov
                         </button>
-                        <div className="w-full">
+                        <div className="grid grid-cols-1 gap-6">
                             {expandedChart === 'thp' && <ThpChart timestamps={timestamps} series={chartsById['thp']?.series} />}
                             {expandedChart === 'pm' && <PmChart timestamps={timestamps} series={chartsById['pm']?.series} />}
                             {expandedChart === 'light' && <LightChart timestamps={timestamps} series={chartsById['light']?.series} />}
