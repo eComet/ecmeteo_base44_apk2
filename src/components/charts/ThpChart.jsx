@@ -222,13 +222,9 @@ export default function ThpChart({ timestamps, series }) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
             if (!chart) return;
             const rect = chart.getBoundingClientRect();
-            const xFrac = (e.clientX - rect.left) / rect.width;
-            const visibleTs = data.map(d => parseTs(d.ts));
-            const tsMin = Math.min(...visibleTs);
-            const tsMax = Math.max(...visibleTs);
-            const tsVal = tsMin + xFrac * (tsMax - tsMin);
+            const xPx = e.clientX - rect.left;
             isSelecting.current = true;
-            setZoomArea({ x1: tsVal, x2: tsVal });
+            setZoomArea({ x1: xPx, x2: xPx });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
