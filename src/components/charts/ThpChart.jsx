@@ -219,6 +219,7 @@ export default function ThpChart({ timestamps, series }) {
                             axisLine={{ stroke: '#d1d5db' }}
                             tickLine={false}
                             minTickGap={40}
+                            label={{ value: 'Čas', position: 'insideBottom', offset: -10, fill: '#6b7280', fontSize: 11 }}
                         />
 
                         <YAxis
