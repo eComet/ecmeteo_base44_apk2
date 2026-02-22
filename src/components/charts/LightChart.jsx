@@ -195,7 +195,7 @@ export default function LightChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
+            <div ref={chartRef} style={{ cursor, userSelect: 'none', position: 'relative' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
                 <ResponsiveContainer width="100%" height={320}>
