@@ -287,7 +287,7 @@ export default function ThpChart({ timestamps, series }) {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 col-span-1 lg:col-span-2 relative">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4" style={{ transform: 'rotate(-90deg)', transformOrigin: 'center', whiteSpace: 'nowrap', marginBottom: '2rem' }}>Graf Teplota / Vlhkosť / Tlak</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-4 chart-title-mobile">Graf Teplota / Vlhkosť / Tlak</h2>
 
             <ChartToolbar
                 activeTool={activeTool}
@@ -304,7 +304,8 @@ export default function ThpChart({ timestamps, series }) {
 
             <div
                 ref={chartRef}
-                style={{ cursor, userSelect: 'none', transform: 'rotate(-90deg)', transformOrigin: 'center', width: '100vh', height: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{ cursor, userSelect: 'none' }}
+                className="chart-container-mobile"
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}

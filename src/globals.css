@@ -1,3 +1,4 @@
+css
 @import url('tailwindcss/tailwind.css');
 
 @media (max-width: 768px) {
@@ -16,5 +17,22 @@
     margin: 0;
     width: 100vh;
     height: 100vw;
+  }
+
+  .chart-container-mobile {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    width: 100vh;
+    height: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart-title-mobile {
+    transform: rotate(-90deg);
+    transform-origin: center;
+    white-space: nowrap;
+    margin-bottom: 2rem;
   }
 }
