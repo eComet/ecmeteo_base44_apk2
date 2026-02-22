@@ -143,9 +143,12 @@ export default function LightChart({ timestamps, series }) {
 
     const handleMouseDown = (e) => {
         if (activeTool === 'zoom') {
-            const r = getXFracTs(e); if (!r) return;
+            const chart = e.currentTarget.querySelector('.recharts-wrapper');
+            if (!chart) return;
+            const rect = chart.getBoundingClientRect();
+            const xPx = e.clientX - rect.left;
             isSelecting.current = true;
-            setZoomArea({ x1: r.tsVal, x2: r.tsVal });
+            setZoomArea({ x1: xPx, x2: xPx });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
