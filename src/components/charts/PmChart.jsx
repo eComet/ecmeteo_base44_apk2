@@ -91,6 +91,10 @@ export default function PmChart({ timestamps, series }) {
         ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
         : allData;
 
+    const pm10MM  = findMinMax('PM10');
+    const pm25MM  = findMinMax('PM2.5');
+    const pm10MM2 = findMinMax('PM1.0');
+
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
         if (!svgEl) return;
