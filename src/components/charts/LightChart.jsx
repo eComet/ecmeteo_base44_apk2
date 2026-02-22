@@ -143,12 +143,9 @@ export default function LightChart({ timestamps, series }) {
 
     const handleMouseDown = (e) => {
         if (activeTool === 'zoom') {
-            const chart = e.currentTarget.querySelector('.recharts-wrapper');
-            if (!chart) return;
-            const rect = chart.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
+            const r = getXFracTs(e); if (!r) return;
             isSelecting.current = true;
-            setZoomArea({ x1: xPx, x2: xPx });
+            setZoomArea({ x1: r.tsVal, x2: r.tsVal });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
@@ -158,11 +155,8 @@ export default function LightChart({ timestamps, series }) {
     };
     const handleMouseMove = (e) => {
         if (activeTool === 'zoom' && isSelecting.current) {
-            const chart = e.currentTarget.querySelector('.recharts-wrapper');
-            if (!chart) return;
-            const rect = chart.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
-            setZoomArea(prev => ({ ...prev, x2: xPx }));
+            const r = getXFracTs(e); if (!r) return;
+            setZoomArea(prev => ({ ...prev, x2: r.tsVal }));
         }
         if (activeTool === 'pan' && panStart.current !== null) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
@@ -179,24 +173,11 @@ export default function LightChart({ timestamps, series }) {
             setZoomRange({ start: newStart, end: newEnd });
         }
     };
-    const handleMouseUp = (e) => {
+    const handleMouseUp = () => {
         if (activeTool === 'zoom' && isSelecting.current && zoomArea) {
             isSelecting.current = false;
             const { x1, x2 } = zoomArea;
-            if (Math.abs(x2 - x1) > 20) {
-                const chart = e.currentTarget?.querySelector('.recharts-wrapper');
-                if (chart) {
-                    const rect = chart.getBoundingClientRect();
-                    const xFrac1 = Math.min(x1, x2) / rect.width;
-                    const xFrac2 = Math.max(x1, x2) / rect.width;
-                    const visibleTs = data.map(d => parseTs(d.ts));
-                    const tsMin = Math.min(...visibleTs);
-                    const tsMax = Math.max(...visibleTs);
-                    const ts1 = tsMin + xFrac1 * (tsMax - tsMin);
-                    const ts2 = tsMin + xFrac2 * (tsMax - tsMin);
-                    setZoomRange({ start: ts1, end: ts2 });
-                }
-            }
+            if (Math.abs(x2 - x1) > 1000) setZoomRange({ start: Math.min(x1, x2), end: Math.max(x1, x2) });
             setZoomArea(null);
         }
         if (activeTool === 'pan') panStart.current = null;
@@ -214,7 +195,7 @@ export default function LightChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none', position: 'relative' }}
+            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
                 <ResponsiveContainer width="100%" height={320}>
@@ -257,15 +238,10 @@ export default function LightChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_LOW}  stroke="#fde047" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '2 000 lux',   fill: '#b45309', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID}  stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '10 000 lux',  fill: '#c2410c', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#ef4444" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 000 lux', fill: '#b91c1c', fontSize: 10, position: 'insideTopRight' }} />
-
+                        {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} fill="#3b82f6" fillOpacity={0.15} strokeOpacity={0.3} />}
                     </ComposedChart>
                 </ResponsiveContainer>
-                {zoomArea && (
-                    <svg style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 9999 }} width="100%" height="100%">
-                        <rect x={Math.min(zoomArea.x1, zoomArea.x2)} y="0" width={Math.abs(zoomArea.x2 - zoomArea.x1)} height="100%" fill="rgba(0, 100, 255, 0.3)" stroke="red" strokeWidth="3" />
-                    </svg>
-                )}
-                </div>
-                </div>
-                );
-                }
+            </div>
+        </div>
+    );
+}

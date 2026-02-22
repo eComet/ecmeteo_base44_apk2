@@ -222,9 +222,13 @@ export default function ThpChart({ timestamps, series }) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
             if (!chart) return;
             const rect = chart.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
+            const xFrac = (e.clientX - rect.left) / rect.width;
+            const visibleTs = data.map(d => parseTs(d.ts));
+            const tsMin = Math.min(...visibleTs);
+            const tsMax = Math.max(...visibleTs);
+            const tsVal = tsMin + xFrac * (tsMax - tsMin);
             isSelecting.current = true;
-            setZoomArea({ x1: xPx, x2: xPx });
+            setZoomArea({ x1: tsVal, x2: tsVal });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
@@ -241,8 +245,11 @@ export default function ThpChart({ timestamps, series }) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
             if (!chart) return;
             const rect = chart.getBoundingClientRect();
-            const xPx = e.clientX - rect.left;
-            setZoomArea(prev => ({ ...prev, x2: xPx }));
+            const xFrac = (e.clientX - rect.left) / rect.width;
+            const visibleTs = data.map(d => parseTs(d.ts));
+            const tsMin = Math.min(...visibleTs);
+            const tsMax = Math.max(...visibleTs);
+            setZoomArea(prev => ({ ...prev, x2: tsMin + xFrac * (tsMax - tsMin) }));
         }
         if (activeTool === 'pan' && panStart.current !== null) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
@@ -266,19 +273,8 @@ export default function ThpChart({ timestamps, series }) {
         if (activeTool === 'zoom' && isSelecting.current && zoomArea) {
             isSelecting.current = false;
             const { x1, x2 } = zoomArea;
-            if (Math.abs(x2 - x1) > 20) {
-                const chart = e.currentTarget?.querySelector('.recharts-wrapper');
-                if (chart) {
-                    const rect = chart.getBoundingClientRect();
-                    const xFrac1 = Math.min(x1, x2) / rect.width;
-                    const xFrac2 = Math.max(x1, x2) / rect.width;
-                    const visibleTs = data.map(d => parseTs(d.ts));
-                    const tsMin = Math.min(...visibleTs);
-                    const tsMax = Math.max(...visibleTs);
-                    const ts1 = tsMin + xFrac1 * (tsMax - tsMin);
-                    const ts2 = tsMin + xFrac2 * (tsMax - tsMin);
-                    setZoomRange({ start: ts1, end: ts2 });
-                }
+            if (Math.abs(x2 - x1) > 1000) {
+                setZoomRange({ start: Math.min(x1, x2), end: Math.max(x1, x2) });
             }
             setZoomArea(null);
         }
@@ -308,7 +304,7 @@ export default function ThpChart({ timestamps, series }) {
 
             <div
                 ref={chartRef}
-                style={{ cursor, userSelect: 'none', position: 'relative' }}
+                style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
@@ -380,7 +376,17 @@ export default function ThpChart({ timestamps, series }) {
                             />
                         )}
 
-                        {/* Zoom selection area - rendered outside ComposedChart */}
+                        {/* Zoom selection area */}
+                        {zoomArea && (
+                            <ReferenceArea
+                                yAxisId="teplota"
+                                x1={zoomArea.x1}
+                                x2={zoomArea.x2}
+                                strokeOpacity={0.3}
+                                fill="#3b82f6"
+                                fillOpacity={0.15}
+                            />
+                        )}
 
                         <Line yAxisId="teplota" type="monotone" dataKey="Teplota"
                             stroke="#1f77b4" strokeWidth={2}
@@ -417,12 +423,7 @@ export default function ThpChart({ timestamps, series }) {
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Tlak']} />
                     </ComposedChart>
                 </ResponsiveContainer>
-                {zoomArea && (
-                    <svg style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: 9999 }} width="100%" height="100%">
-                        <rect x={Math.min(zoomArea.x1, zoomArea.x2)} y="0" width={Math.abs(zoomArea.x2 - zoomArea.x1)} height="100%" fill="rgba(0, 100, 255, 0.3)" stroke="red" strokeWidth="3" />
-                    </svg>
-                )}
-                </div>
-                </div>
-                );
-                }
+            </div>
+        </div>
+    );
+}
