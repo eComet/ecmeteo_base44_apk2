@@ -259,7 +259,9 @@ export default function ThpChart({ timestamps, series }) {
 
                         {showLegend && (
                             <Legend
-                                wrapperStyle={{ fontSize: '12px', paddingTop: '14px' }}
+                                verticalAlign="bottom"
+                                align="left"
+                                wrapperStyle={{ fontSize: '12px', paddingLeft: '60px', paddingBottom: '4px' }}
                                 formatter={(value) => <span style={{ color: '#374151' }}>{value}</span>}
                             />
                         )}
