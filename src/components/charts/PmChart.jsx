@@ -161,7 +161,7 @@ export default function PmChart({ timestamps, series }) {
         const xFrac = (e.clientX - rect.left) / rect.width;
         const visibleTs = data.map(d => parseTs(d.ts));
         const tsMin = Math.min(...visibleTs), tsMax = Math.max(...visibleTs);
-        return { tsVal: tsMin + xFrac * (tsMax - tsMin), rect, xFrac, tsMin, tsMax };
+        return { tsVal: tsMin + xFrac * (tsMax - tsMin), rect, xFrac, tsMin, tsMax, clientX: e.clientX, clientY: e.clientY };
     };
 
     const handleMouseDown = (e) => {
