@@ -2,7 +2,7 @@ import JSZip from 'npm:jszip@3.10.1';
 
 Deno.serve(async (req) => {
     try {
-        const response = await fetch('https://meteo.comet:9080/api/get-meta', {
+        const response = await fetch('https://meteo.ecmeteo.org:9080/api/get-meta', {
             headers: {
                 'Authorization': 'Bearer GvYkwfJ7Zqz2yKIo4LLe'
             }

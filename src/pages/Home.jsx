@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import JSZip from 'jszip';
+import { base44 } from '@/api/base44Client';
 import { RefreshCw, CloudRain, AlertCircle, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import MeteoChart from '../components/MeteoChart';
