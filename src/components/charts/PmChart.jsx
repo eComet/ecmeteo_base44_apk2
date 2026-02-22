@@ -63,6 +63,27 @@ export default function PmChart({ timestamps, series }) {
         ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
         : allData;
 
+    const TICK_COUNT = 8;
+
+    function niceDomain(min, max, steps) {
+        const niceMin = Math.floor(min);
+        const niceMax = Math.ceil(max);
+        const step = Math.ceil((niceMax - niceMin) / (steps - 1));
+        return { min: niceMin, max: niceMax, step };
+    }
+    function makeTicks(niceMin, niceMax, step) {
+        const ticks = [];
+        for (let v = niceMin; v <= niceMax + 0.001; v += step) ticks.push(Math.round(v));
+        return ticks;
+    }
+
+    const allPmValues = data.flatMap(d => [d['PM1.0'], d['PM2.5'], d['PM10']]).filter(v => v != null);
+    const pmMin = 0;
+    const pmRawMax = allPmValues.length ? Math.max(...allPmValues) : THRESHOLD_HIGH;
+    const pmPaddedMax = pmRawMax * 1.1;
+    const pmDomain = niceDomain(pmMin, pmPaddedMax, TICK_COUNT);
+    const pmTicks = makeTicks(pmDomain.min, pmDomain.max, pmDomain.step);
+
     function shadeColor(hex, isMax) {
         const r = parseInt(hex.slice(1,3),16);
         const g = parseInt(hex.slice(3,5),16);
