@@ -11,6 +11,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [lastUpdated, setLastUpdated] = useState(null);
+    const [expandedChart, setExpandedChart] = useState(null);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
