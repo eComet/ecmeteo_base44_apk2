@@ -219,7 +219,15 @@ export default function LightChart({ timestamps, series }) {
                         <Area type="monotone" dataKey="mid"  fill="#fde68a" stroke="none" fillOpacity={0.4} legendType="none" isAnimationActive={false} />
                         <Area type="monotone" dataKey="high" fill="#fb923c" stroke="none" fillOpacity={0.4} legendType="none" isAnimationActive={false} />
                         <Area type="monotone" dataKey="top"  fill="#f87171" stroke="none" fillOpacity={0.3} legendType="none" isAnimationActive={false} />
-                        <Line type="monotone" dataKey="Svietivosť" stroke="#ff7f0e" strokeWidth={2} dot={false} isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['Svietivosť']} />
+                        <Line type="monotone" dataKey="Svietivosť" stroke="#ff7f0e" strokeWidth={2}
+                            dot={showMinMax ? (props) => {
+                                const { cx, cy, payload } = props;
+                                const isMin = luxMM.min && payload.ts === luxMM.min.ts;
+                                const isMax = luxMM.max && payload.ts === luxMM.max.ts;
+                                if (!isMin && !isMax) return null;
+                                return <MinMaxDot key={`lux-${payload.ts}`} cx={cx} cy={cy} value={payload.Svietivosť} color="#ff7f0e" isMax={isMax} />;
+                            } : false}
+                            isAnimationActive={false} activeDot={hoverEnabled ? { r: 4 } : false} hide={!!hiddenSeries['Svietivosť']} />
                         <ReferenceLine y={THRESHOLD_LOW}  stroke="#fde047" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '2 000 lux',   fill: '#b45309', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID}  stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '10 000 lux',  fill: '#c2410c', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#ef4444" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 000 lux', fill: '#b91c1c', fontSize: 10, position: 'insideTopRight' }} />
