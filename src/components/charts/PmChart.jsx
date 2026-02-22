@@ -223,9 +223,24 @@ export default function PmChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
+            <div ref={chartRef} style={{ cursor, userSelect: 'none', position: 'relative' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+                {zoomArea && (
+                    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '320px', pointerEvents: 'none', zIndex: 10 }}>
+                        <rect
+                            x={Math.min(zoomArea.px1, zoomArea.px2) - zoomArea.rect.left}
+                            y={Math.min(zoomArea.py1, zoomArea.py2) - zoomArea.rect.top}
+                            width={Math.abs(zoomArea.px2 - zoomArea.px1)}
+                            height={Math.abs(zoomArea.py2 - zoomArea.py1)}
+                            fill="#3b82f6"
+                            fillOpacity="0.2"
+                            stroke="#3b82f6"
+                            strokeWidth="2"
+                            strokeDasharray="5,5"
+                        />
+                    </svg>
+                )}
                 <ResponsiveContainer width="100%" height={320}>
                     <LineChart data={data} margin={{ top: 8, right: 30, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
