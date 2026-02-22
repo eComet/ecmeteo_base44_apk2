@@ -117,7 +117,7 @@ export default function LightChart({ timestamps, series }) {
     const handleReset = useCallback(() => { setZoomRange(null); setZoomArea(null); }, []);
 
     const CustomLegend = () => (
-        <div style={{ display: 'flex', gap: '16px', paddingLeft: '70px', paddingBottom: '2px', paddingTop: '4px' }}>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', paddingBottom: '2px', paddingTop: '4px' }}>
             {['Svietivosť'].map(key => {
                 const hidden = hiddenSeries[key];
                 return (
