@@ -278,33 +278,36 @@ export default function ThpChart({ timestamps, series }) {
                             yAxisId="teplota"
                             orientation="left"
                             domain={[tepMin, tepMax]}
+                            ticks={tepTicks}
                             tick={{ fontSize: 11, fill: '#1f77b4' }}
                             axisLine={{ stroke: '#1f77b4' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#1f77b4', strokeWidth: 1 }}
                             width={70}
-                            tickFormatter={v => `${v.toFixed(1)} °C`}
+                            tickFormatter={v => `${Math.round(v)} °C`}
                             label={{ value: 'Teplota (°C)', angle: -90, position: 'insideLeft', offset: 15, fill: '#1f77b4', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="vlhkost"
                             orientation="right"
                             domain={[vlhMin, vlhMax]}
+                            ticks={vlhTicks}
                             tick={{ fontSize: 11, fill: '#ff7f0e' }}
                             axisLine={{ stroke: '#ff7f0e' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#ff7f0e', strokeWidth: 1 }}
                             width={65}
-                            tickFormatter={v => `${v.toFixed(0)} %`}
+                            tickFormatter={v => `${Math.round(v)} %`}
                             label={{ value: 'Vlhkosť (%)', angle: 90, position: 'insideRight', offset: 15, fill: '#ff7f0e', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="tlak"
                             orientation="right"
                             domain={[tlakMin, tlakMax]}
+                            ticks={tlakTicks}
                             tick={{ fontSize: 11, fill: '#2ca02c' }}
                             axisLine={{ stroke: '#2ca02c' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#2ca02c', strokeWidth: 1 }}
                             width={85}
-                            tickFormatter={v => `${v.toFixed(1)} hPa`}
+                            tickFormatter={v => `${Math.round(v)} hPa`}
                             label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
                         />
 
