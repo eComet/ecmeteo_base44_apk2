@@ -281,6 +281,8 @@ export default function ThpChart({ timestamps, series }) {
                 setShowLegend={setShowLegend}
                 hoverEnabled={hoverEnabled}
                 setHoverEnabled={setHoverEnabled}
+                showMinMax={showMinMax}
+                setShowMinMax={setShowMinMax}
                 onReset={handleReset}
                 onSave={handleSave}
             />
