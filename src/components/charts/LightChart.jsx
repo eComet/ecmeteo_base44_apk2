@@ -238,7 +238,7 @@ export default function LightChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_LOW}  stroke="#fde047" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '2 000 lux',   fill: '#b45309', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID}  stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '10 000 lux',  fill: '#c2410c', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#ef4444" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 000 lux', fill: '#b91c1c', fontSize: 10, position: 'insideTopRight' }} />
-                        {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} stroke="#3b82f6" strokeWidth={3} strokeDasharray="5 5" fill="#3b82f6" fillOpacity={0.2} />}
+                        {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} stroke="#1e40af" strokeWidth={4} strokeDasharray="8 4" fill="#dbeafe" fillOpacity={0.5} />}
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>
