@@ -47,7 +47,6 @@ export default function PmChart({ timestamps, series }) {
     const panStart = useRef(null);
     const panRangeAtStart = useRef(null);
     const chartRef = useRef(null);
-    const chartWrapperRef = useRef(null);
 
     if (!timestamps?.length || !series) return null;
 
@@ -161,14 +160,14 @@ export default function PmChart({ timestamps, series }) {
         const xFrac = (e.clientX - rect.left) / rect.width;
         const visibleTs = data.map(d => parseTs(d.ts));
         const tsMin = Math.min(...visibleTs), tsMax = Math.max(...visibleTs);
-        return { tsVal: tsMin + xFrac * (tsMax - tsMin), rect, xFrac, tsMin, tsMax, clientX: e.clientX, clientY: e.clientY };
+        return { tsVal: tsMin + xFrac * (tsMax - tsMin), rect, xFrac, tsMin, tsMax };
     };
 
     const handleMouseDown = (e) => {
         if (activeTool === 'zoom') {
             const r = getXFracTs(e); if (!r) return;
             isSelecting.current = true;
-            setZoomArea({ px1: r.clientX, py1: r.clientY, px2: r.clientX, py2: r.clientY, rect: r.rect });
+            setZoomArea({ x1: r.tsVal, x2: r.tsVal });
         }
         if (activeTool === 'pan') {
             const visibleTs = data.map(d => parseTs(d.ts));
@@ -179,7 +178,7 @@ export default function PmChart({ timestamps, series }) {
     const handleMouseMove = (e) => {
         if (activeTool === 'zoom' && isSelecting.current) {
             const r = getXFracTs(e); if (!r) return;
-            setZoomArea(prev => ({ ...prev, px2: r.clientX, py2: r.clientY }));
+            setZoomArea(prev => ({ ...prev, x2: r.tsVal }));
         }
         if (activeTool === 'pan' && panStart.current !== null) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
@@ -199,12 +198,7 @@ export default function PmChart({ timestamps, series }) {
     const handleMouseUp = (e) => {
         if (activeTool === 'zoom' && isSelecting.current && zoomArea) {
             isSelecting.current = false;
-            const r = getXFracTs(e); if (!r) return;
-            const { tsVal: x2 } = r;
-            const { px1, px2 } = zoomArea;
-            const visibleTs = data.map(d => parseTs(d.ts));
-            const tsMin = Math.min(...visibleTs), tsMax = Math.max(...visibleTs);
-            const x1 = tsMin + (px1 - zoomArea.rect.left) / zoomArea.rect.width * (tsMax - tsMin);
+            const { x1, x2 } = zoomArea;
             if (Math.abs(x2 - x1) > 1000) setZoomRange({ start: Math.min(x1, x2), end: Math.max(x1, x2) });
             setZoomArea(null);
         }
@@ -223,24 +217,9 @@ export default function PmChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none', position: 'relative' }}
+            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-                {zoomArea && (
-                    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '320px', pointerEvents: 'none', zIndex: 10 }}>
-                        <rect
-                            x={Math.min(zoomArea.px1, zoomArea.px2) - zoomArea.rect.left}
-                            y={Math.min(zoomArea.py1, zoomArea.py2) - zoomArea.rect.top}
-                            width={Math.abs(zoomArea.px2 - zoomArea.px1)}
-                            height={Math.abs(zoomArea.py2 - zoomArea.py1)}
-                            fill="#3b82f6"
-                            fillOpacity="0.2"
-                            stroke="#3b82f6"
-                            strokeWidth="2"
-                            strokeDasharray="5,5"
-                        />
-                    </svg>
-                )}
                 <ResponsiveContainer width="100%" height={320}>
                     <LineChart data={data} margin={{ top: 8, right: 30, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -268,6 +247,7 @@ export default function PmChart({ timestamps, series }) {
                         <ReferenceLine y={THRESHOLD_LOW} stroke="#3b82f6" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '20 μg/m³', fill: '#3b82f6', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_MID} stroke="#f97316" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '40 μg/m³', fill: '#f97316', fontSize: 10, position: 'insideTopRight' }} />
                         <ReferenceLine y={THRESHOLD_HIGH} stroke="#a855f7" strokeDasharray="5 3" strokeWidth={1.5} label={{ value: '100 μg/m³', fill: '#a855f7', fontSize: 10, position: 'insideTopRight' }} />
+                        {zoomArea && <ReferenceArea x1={zoomArea.x1} x2={zoomArea.x2} stroke="#3b82f6" strokeWidth={3} strokeDasharray="5 5" fill="#3b82f6" fillOpacity={0.2} />}
                         <Line type="monotone" dataKey="PM1.0" stroke="#1f77b4" strokeWidth={2}
                             dot={showMinMax ? (props) => {
                                 const { cx, cy, payload } = props;
