@@ -82,16 +82,18 @@ export default function ThpChart({ timestamps, series }) {
 
     const TICK_COUNT = 8;
 
-    // Round domain to nice integers and compute evenly-spaced ticks
+    // Compute evenly-spaced ticks fitting within [min, max]
     function niceDomain(min, max, steps) {
         const niceMin = Math.floor(min);
         const niceMax = Math.ceil(max);
+        // step that fits exactly steps ticks within the range
         const step = Math.ceil((niceMax - niceMin) / (steps - 1));
-        const adjMax = niceMin + step * (steps - 1);
-        return { min: niceMin, max: adjMax, step };
+        return { min: niceMin, max: niceMax, step };
     }
-    function makeTicks(niceMin, step, steps) {
-        return Array.from({ length: steps }, (_, i) => niceMin + i * step);
+    function makeTicks(niceMin, niceMax, step) {
+        const ticks = [];
+        for (let v = niceMin; v <= niceMax + 0.001; v += step) ticks.push(Math.round(v));
+        return ticks;
     }
 
     function paddedRange(values, padFrac = 0.2) {
