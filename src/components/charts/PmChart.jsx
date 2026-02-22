@@ -205,7 +205,20 @@ export default function PmChart({ timestamps, series }) {
         if (activeTool === 'zoom' && isSelecting.current && zoomArea) {
             isSelecting.current = false;
             const { x1, x2 } = zoomArea;
-            if (Math.abs(x2 - x1) > 1000) setZoomRange({ start: Math.min(x1, x2), end: Math.max(x1, x2) });
+            if (Math.abs(x2 - x1) > 20) {
+                const chart = e.currentTarget?.querySelector('.recharts-wrapper');
+                if (chart) {
+                    const rect = chart.getBoundingClientRect();
+                    const xFrac1 = Math.min(x1, x2) / rect.width;
+                    const xFrac2 = Math.max(x1, x2) / rect.width;
+                    const visibleTs = data.map(d => parseTs(d.ts));
+                    const tsMin = Math.min(...visibleTs);
+                    const tsMax = Math.max(...visibleTs);
+                    const ts1 = tsMin + xFrac1 * (tsMax - tsMin);
+                    const ts2 = tsMin + xFrac2 * (tsMax - tsMin);
+                    setZoomRange({ start: ts1, end: ts2 });
+                }
+            }
             setZoomArea(null);
         }
         if (activeTool === 'pan') panStart.current = null;
