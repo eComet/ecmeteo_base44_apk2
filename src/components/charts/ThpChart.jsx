@@ -81,6 +81,7 @@ export default function ThpChart({ timestamps, series }) {
     const nonNullTlak = tlakData.filter(v => v != null);
 
     const TICK_COUNT = 8;
+    const MINOR_PER_INTERVAL = 4; // minor ticks between each major tick
 
     // Round domain to nice integers and compute evenly-spaced ticks
     function niceDomain(min, max, steps) {
@@ -93,6 +94,26 @@ export default function ThpChart({ timestamps, series }) {
     function makeTicks(niceMin, step, steps) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
+    function makeMinorTicks(majorTicks, minorPerInterval) {
+        const result = [];
+        for (let i = 0; i < majorTicks.length - 1; i++) {
+            const start = majorTicks[i];
+            const end = majorTicks[i + 1];
+            const subStep = (end - start) / (minorPerInterval + 1);
+            for (let j = 1; j <= minorPerInterval; j++) {
+                result.push(start + j * subStep);
+            }
+        }
+        return result;
+    }
+
+    // Custom tick component for minor ticks (short line, no label)
+    const MinorTick = ({ x, y, payload, orientation }) => {
+        const len = 3;
+        const x1 = orientation === 'left' ? x - len : x;
+        const x2 = orientation === 'left' ? x : x + len;
+        return <line x1={x1} y1={y} x2={x2} y2={y} stroke="#9ca3af" strokeWidth={1} />;
+    };
 
     const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
     const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
