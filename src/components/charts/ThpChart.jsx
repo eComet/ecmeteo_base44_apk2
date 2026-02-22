@@ -151,6 +151,14 @@ export default function ThpChart({ timestamps, series }) {
     const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
     const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
 
+    const tepAllTicks  = [...tepTicks,  ...makeMinorTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT)].sort((a, b) => a - b);
+    const vlhAllTicks  = [...vlhTicks,  ...makeMinorTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT)].sort((a, b) => a - b);
+    const tlakAllTicks = [...tlakTicks, ...makeMinorTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT)].sort((a, b) => a - b);
+
+    const TepTick  = makeCustomTick(tepTicks,  '#1f77b4', v => `${Math.round(v)} °C`,  'left');
+    const VlhTick  = makeCustomTick(vlhTicks,  '#ff7f0e', v => `${Math.round(v)} %`,   'right');
+    const TlakTick = makeCustomTick(tlakTicks, '#2ca02c', v => `${Math.round(v)} hPa`, 'right');
+
     // Save chart as PNG
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
