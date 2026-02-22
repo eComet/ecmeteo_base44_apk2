@@ -94,12 +94,20 @@ export default function ThpChart({ timestamps, series }) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
 
-    const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
-    const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
-    const rawVlhMin  = nonNullVlh.length  ? Math.min(...nonNullVlh)  - 2  : 0;
-    const rawVlhMax  = nonNullVlh.length  ? Math.max(...nonNullVlh)  + 2  : 105;
-    const rawTlakMin = nonNullTlak.length ? Math.min(...nonNullTlak) - 1  : 990;
-    const rawTlakMax = nonNullTlak.length ? Math.max(...nonNullTlak) + 1  : 1030;
+    function paddedRange(values, padFrac = 0.2) {
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        const span = max - min || 1;
+        return { min: min - span * 0.05, max: max + span * padFrac };
+    }
+
+    const tepRange  = nonNullTep.length  ? paddedRange(nonNullTep)  : { min: -5,  max: 40   };
+    const vlhRange  = nonNullVlh.length  ? paddedRange(nonNullVlh)  : { min: 0,   max: 105  };
+    const tlakRange = nonNullTlak.length ? paddedRange(nonNullTlak) : { min: 990, max: 1030 };
+
+    const rawTepMin  = tepRange.min;  const rawTepMax  = tepRange.max;
+    const rawVlhMin  = vlhRange.min;  const rawVlhMax  = vlhRange.max;
+    const rawTlakMin = tlakRange.min; const rawTlakMax = tlakRange.max;
 
     const tepDomain  = niceDomain(rawTepMin,  rawTepMax,  TICK_COUNT);
     const vlhDomain  = niceDomain(rawVlhMin,  rawVlhMax,  TICK_COUNT);
