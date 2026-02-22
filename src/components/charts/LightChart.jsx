@@ -209,7 +209,7 @@ export default function LightChart({ timestamps, series }) {
                             label={{ value: 'Čas', position: 'insideBottom', offset: -10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <YAxis
-                            domain={[luxDomain.min, luxDomain.max]}
+                            domain={[0, luxMax]}
                             ticks={luxTicks}
                             tick={{ fontSize: 11, fill: '#9ca3af' }}
                             axisLine={{ stroke: '#d1d5db' }}
