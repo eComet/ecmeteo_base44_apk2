@@ -304,7 +304,7 @@ export default function ThpChart({ timestamps, series }) {
 
             <div
                 ref={chartRef}
-                style={{ cursor, userSelect: 'none' }}
+                style={{ cursor, userSelect: 'none', position: 'relative' }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
