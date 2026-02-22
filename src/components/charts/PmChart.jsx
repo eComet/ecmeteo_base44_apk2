@@ -217,7 +217,7 @@ export default function PmChart({ timestamps, series }) {
                 showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
-            <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
+            <div ref={chartRef} style={{ cursor, userSelect: 'none', transform: 'rotate(-90deg)', transformOrigin: 'center', width: '100vh', height: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
                 <ResponsiveContainer width="100%" height={320}>

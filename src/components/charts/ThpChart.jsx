@@ -304,7 +304,7 @@ export default function ThpChart({ timestamps, series }) {
 
             <div
                 ref={chartRef}
-                style={{ cursor, userSelect: 'none' }}
+                style={{ cursor, userSelect: 'none', transform: 'rotate(-90deg)', transformOrigin: 'center', width: '100vh', height: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
