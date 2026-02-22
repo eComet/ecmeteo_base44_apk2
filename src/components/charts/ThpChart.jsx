@@ -40,6 +40,7 @@ export default function ThpChart({ timestamps, series }) {
     const [showLegend, setShowLegend] = useState(true);
     const [hoverEnabled, setHoverEnabled] = useState(true);
     const [hiddenSeries, setHiddenSeries] = useState({});
+    const [showMinMax, setShowMinMax] = useState(false);
 
     // Zoom state
     const [zoomArea, setZoomArea] = useState(null);   // { x1, x2 } during selection
