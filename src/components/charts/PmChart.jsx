@@ -231,9 +231,13 @@ export default function PmChart({ timestamps, series }) {
                             label={{ value: 'Čas', position: 'insideBottom', offset: -10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <YAxis
-                            domain={[0, THRESHOLD_HIGH + 10]}
+                            domain={[pmDomain.min, pmDomain.max]}
+                            ticks={pmTicks}
                             tick={{ fontSize: 11, fill: '#9ca3af' }}
-                            axisLine={false} tickLine={false} width={55}
+                            axisLine={{ stroke: '#d1d5db' }}
+                            tickLine={{ stroke: '#d1d5db', strokeWidth: 1 }}
+                            width={55}
+                            tickFormatter={v => `${Math.round(v)}`}
                             label={{ value: 'Koncentrácia (μg/m³)', angle: -90, position: 'insideLeft', offset: 10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <Tooltip content={hoverEnabled ? <CustomTooltip /> : <span />} active={hoverEnabled ? undefined : false} />
