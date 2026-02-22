@@ -186,7 +186,7 @@ export default function LightChart({ timestamps, series }) {
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative landscape:p-3">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf Svietivosť</h2>
             <ChartToolbar
                 activeTool={activeTool} setActiveTool={setActiveTool}
@@ -198,7 +198,7 @@ export default function LightChart({ timestamps, series }) {
             <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-                <ResponsiveContainer width="100%" height={320} className="landscape:h-48">
+                <ResponsiveContainer width="100%" height={320}>
                     <ComposedChart data={data} margin={{ top: 8, right: 30, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                         <XAxis

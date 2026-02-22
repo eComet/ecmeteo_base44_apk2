@@ -112,14 +112,14 @@ export default function Home() {
 
                 {/* Expanded chart view */}
                 {!loading && !error && data && expandedChart && (
-                    <div className="flex flex-col items-center justify-center min-h-screen lg:min-h-auto landscape:min-h-auto landscape:max-h-screen landscape:overflow-auto">
+                    <div className="flex flex-col items-center justify-center min-h-screen lg:min-h-auto">
                         <button
                             onClick={() => setExpandedChart(null)}
-                            className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors landscape:mb-2 landscape:px-3 landscape:py-1 landscape:text-xs"
+                            className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors"
                         >
                             ← Späť na výber grafov
                         </button>
-                        <div className="w-full landscape:overflow-y-auto landscape:max-h-[calc(100vh-60px)]">
+                        <div className="w-full">
                             {expandedChart === 'thp' && <ThpChart timestamps={timestamps} series={chartsById['thp']?.series} />}
                             {expandedChart === 'pm' && <PmChart timestamps={timestamps} series={chartsById['pm']?.series} />}
                             {expandedChart === 'light' && <LightChart timestamps={timestamps} series={chartsById['light']?.series} />}
