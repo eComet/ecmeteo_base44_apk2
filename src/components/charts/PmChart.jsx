@@ -231,7 +231,7 @@ export default function PmChart({ timestamps, series }) {
                             label={{ value: 'Čas', position: 'insideBottom', offset: -10, fill: '#6b7280', fontSize: 11 }}
                         />
                         <YAxis
-                            domain={[pmDomain.min, pmDomain.max]}
+                            domain={[pmMin, pmMax]}
                             ticks={pmTicks}
                             tick={{ fontSize: 11, fill: '#9ca3af' }}
                             axisLine={{ stroke: '#d1d5db' }}
