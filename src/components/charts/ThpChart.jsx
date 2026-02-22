@@ -136,13 +136,28 @@ export default function ThpChart({ timestamps, series }) {
     const vlhMM  = findMinMax('Vlhkosť');
     const tlakMM = findMinMax('Tlak');
 
-    const MinMaxDot = ({ cx, cy, value, unit, decimals = 2 }) => {
+    // Darken or lighten a hex color by mixing with black/white
+    function shadeColor(hex, isMax) {
+        // isMax → darker, isMin → lighter
+        const r = parseInt(hex.slice(1,3),16);
+        const g = parseInt(hex.slice(3,5),16);
+        const b = parseInt(hex.slice(5,7),16);
+        const [tr,tg,tb] = isMax ? [0,0,0] : [255,255,255];
+        const f = isMax ? 0.45 : 0.45;
+        const nr = Math.round(r + (tr-r)*f);
+        const ng = Math.round(g + (tg-g)*f);
+        const nb = Math.round(b + (tb-b)*f);
+        return `rgb(${nr},${ng},${nb})`;
+    }
+
+    const MinMaxDot = ({ cx, cy, value, unit, decimals = 2, color, isMax }) => {
         if (cx == null || cy == null || value == null) return null;
+        const dotColor = shadeColor(color, isMax);
         const label = `${value.toFixed(decimals)} ${unit}`;
         return (
             <g>
-                <circle cx={cx} cy={cy} r={5} fill="#ef4444" stroke="#fff" strokeWidth={1.5} />
-                <text x={cx} y={cy - 9} textAnchor="middle" fontSize={10} fill="#ef4444" fontWeight="600">{label}</text>
+                <circle cx={cx} cy={cy} r={5} fill={dotColor} stroke="#fff" strokeWidth={1.5} />
+                <text x={cx} y={cy - 9} textAnchor="middle" fontSize={10} fill={dotColor} fontWeight="600">{label}</text>
             </g>
         );
     };
