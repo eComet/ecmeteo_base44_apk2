@@ -193,6 +193,7 @@ export default function PmChart({ timestamps, series }) {
                 activeTool={activeTool} setActiveTool={setActiveTool}
                 showLegend={showLegend} setShowLegend={setShowLegend}
                 hoverEnabled={hoverEnabled} setHoverEnabled={setHoverEnabled}
+                showMinMax={showMinMax} setShowMinMax={setShowMinMax}
                 onReset={handleReset} onSave={handleSave}
             />
             <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
