@@ -311,15 +311,15 @@ export default function ThpChart({ timestamps, series }) {
                         <Line yAxisId="teplota" type="monotone" dataKey="Teplota"
                             stroke="#1f77b4" strokeWidth={2} dot={false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
-                            isAnimationActive={false} connectNulls />
+                            isAnimationActive={false} connectNulls hide={!!hiddenSeries['Teplota']} />
                         <Line yAxisId="vlhkost" type="monotone" dataKey="Vlhkosť"
                             stroke="#ff7f0e" strokeWidth={2} dot={false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
-                            isAnimationActive={false} connectNulls />
+                            isAnimationActive={false} connectNulls hide={!!hiddenSeries['Vlhkosť']} />
                         <Line yAxisId="tlak" type="monotone" dataKey="Tlak"
                             stroke="#2ca02c" strokeWidth={2} dot={false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
-                            isAnimationActive={false} connectNulls />
+                            isAnimationActive={false} connectNulls hide={!!hiddenSeries['Tlak']} />
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>
