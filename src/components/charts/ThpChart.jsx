@@ -395,7 +395,7 @@ export default function ThpChart({ timestamps, series }) {
                                 const isMin = tepMM.min && payload.ts === tepMM.min.ts;
                                 const isMax = tepMM.max && payload.ts === tepMM.max.ts;
                                 if (!isMin && !isMax) return null;
-                                return <MinMaxDot key={`tep-${payload.ts}`} cx={cx} cy={cy} value={payload.Teplota} unit="°C" decimals={1} />;
+                                return <MinMaxDot key={`tep-${payload.ts}`} cx={cx} cy={cy} value={payload.Teplota} unit="°C" decimals={1} color="#1f77b4" isMax={isMax} />;
                             } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Teplota']} />
@@ -406,7 +406,7 @@ export default function ThpChart({ timestamps, series }) {
                                 const isMin = vlhMM.min && payload.ts === vlhMM.min.ts;
                                 const isMax = vlhMM.max && payload.ts === vlhMM.max.ts;
                                 if (!isMin && !isMax) return null;
-                                return <MinMaxDot key={`vlh-${payload.ts}`} cx={cx} cy={cy} value={payload['Vlhkosť']} unit="%" decimals={0} />;
+                                return <MinMaxDot key={`vlh-${payload.ts}`} cx={cx} cy={cy} value={payload['Vlhkosť']} unit="%" decimals={0} color="#ff7f0e" isMax={isMax} />;
                             } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Vlhkosť']} />
@@ -417,7 +417,7 @@ export default function ThpChart({ timestamps, series }) {
                                 const isMin = tlakMM.min && payload.ts === tlakMM.min.ts;
                                 const isMax = tlakMM.max && payload.ts === tlakMM.max.ts;
                                 if (!isMin && !isMax) return null;
-                                return <MinMaxDot key={`tlak-${payload.ts}`} cx={cx} cy={cy} value={payload.Tlak} unit="hPa" decimals={1} />;
+                                return <MinMaxDot key={`tlak-${payload.ts}`} cx={cx} cy={cy} value={payload.Tlak} unit="hPa" decimals={1} color="#2ca02c" isMax={isMax} />;
                             } : false}
                             activeDot={hoverEnabled ? { r: 4 } : false}
                             isAnimationActive={false} connectNulls hide={!!hiddenSeries['Tlak']} />
