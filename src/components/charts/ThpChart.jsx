@@ -93,6 +93,44 @@ export default function ThpChart({ timestamps, series }) {
     function makeTicks(niceMin, step, steps) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
+    // Generates minor ticks between each pair of major ticks (4 between each pair)
+    function makeMinorTicks(niceMin, step, steps, minorCount = 4) {
+        const result = [];
+        const minorStep = step / (minorCount + 1);
+        for (let i = 0; i < steps - 1; i++) {
+            for (let j = 1; j <= minorCount; j++) {
+                result.push(niceMin + i * step + j * minorStep);
+            }
+        }
+        return result;
+    }
+
+    // Custom tick renderer: major ticks show label, minor ticks show only a short line
+    function makeCustomTick(majorTicks, color, formatter, side = 'left') {
+        return function CustomTick({ x, y, payload }) {
+            const isMajor = majorTicks.some(t => Math.abs(t - payload.value) < 0.001);
+            const len = isMajor ? 6 : 3;
+            const x1 = side === 'left' ? x - len : x;
+            const x2 = side === 'left' ? x : x + len;
+            return (
+                <g>
+                    <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={1} />
+                    {isMajor && (
+                        <text
+                            x={side === 'left' ? x - 8 : x + 8}
+                            y={y}
+                            dy="0.35em"
+                            textAnchor={side === 'left' ? 'end' : 'start'}
+                            fill={color}
+                            fontSize={11}
+                        >
+                            {formatter(payload.value)}
+                        </text>
+                    )}
+                </g>
+            );
+        };
+    }
 
     const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
     const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
