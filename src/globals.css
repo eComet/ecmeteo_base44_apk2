@@ -2,7 +2,7 @@ css
 @import url('tailwindcss/tailwind.css');
 
 @media (max-width: 768px) {
-  .recharts-wrapper {
+  .bg-white.rounded-2xl {
     transform: rotate(90deg);
     transform-origin: center;
     width: 100vh;
