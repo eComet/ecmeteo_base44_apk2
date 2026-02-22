@@ -199,7 +199,12 @@ export default function PmChart({ timestamps, series }) {
     const handleMouseUp = (e) => {
         if (activeTool === 'zoom' && isSelecting.current && zoomArea) {
             isSelecting.current = false;
-            const { x1, x2 } = zoomArea;
+            const r = getXFracTs(e); if (!r) return;
+            const { tsVal: x2 } = r;
+            const { px1, px2 } = zoomArea;
+            const visibleTs = data.map(d => parseTs(d.ts));
+            const tsMin = Math.min(...visibleTs), tsMax = Math.max(...visibleTs);
+            const x1 = tsMin + (px1 - zoomArea.rect.left) / zoomArea.rect.width * (tsMax - tsMin);
             if (Math.abs(x2 - x1) > 1000) setZoomRange({ start: Math.min(x1, x2), end: Math.max(x1, x2) });
             setZoomArea(null);
         }
