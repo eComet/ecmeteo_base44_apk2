@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import JSZip from 'jszip';
 import { RefreshCw, CloudRain, AlertCircle, Clock } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import MeteoChart from '../components/MeteoChart';
 
 export default function Home() {
