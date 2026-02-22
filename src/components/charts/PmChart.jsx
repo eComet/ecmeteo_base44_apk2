@@ -59,6 +59,10 @@ export default function PmChart({ timestamps, series }) {
         'PM10':  pm10?.data[i]  ?? null,
     }));
 
+    const data = zoomRange
+        ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
+        : allData;
+
     function shadeColor(hex, isMax) {
         const r = parseInt(hex.slice(1,3),16);
         const g = parseInt(hex.slice(3,5),16);
@@ -76,6 +80,10 @@ export default function PmChart({ timestamps, series }) {
         return { min: minPt, max: maxPt };
     }
 
+    const pm10MM = findMinMax('PM10');
+    const pm25MM = findMinMax('PM2.5');
+    const pm10MM2 = findMinMax('PM1.0');
+
     const MinMaxDot = ({ cx, cy, value, unit, color, isMax }) => {
         if (cx == null || cy == null || value == null) return null;
         const dotColor = shadeColor(color, isMax);
@@ -86,14 +94,6 @@ export default function PmChart({ timestamps, series }) {
             </g>
         );
     };
-
-    const data = zoomRange
-        ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
-        : allData;
-
-    const pm10MM  = findMinMax('PM10');
-    const pm25MM  = findMinMax('PM2.5');
-    const pm10MM2 = findMinMax('PM1.0');
 
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
