@@ -186,7 +186,7 @@ export default function LightChart({ timestamps, series }) {
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative landscape:p-3">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf Svietivosť</h2>
             <ChartToolbar
                 activeTool={activeTool} setActiveTool={setActiveTool}
