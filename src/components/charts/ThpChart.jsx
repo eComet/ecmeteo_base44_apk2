@@ -377,16 +377,17 @@ export default function ThpChart({ timestamps, series }) {
                         )}
 
                         {/* Zoom selection area */}
-                        {zoomArea && (
-                            <ReferenceArea
-                                yAxisId="teplota"
-                                x1={zoomArea.x1}
-                                x2={zoomArea.x2}
-                                strokeOpacity={0.3}
-                                fill="#3b82f6"
-                                fillOpacity={0.15}
-                            />
-                        )}
+                         {zoomArea && (
+                             <ReferenceArea
+                                 yAxisId="teplota"
+                                 x1={zoomArea.x1}
+                                 x2={zoomArea.x2}
+                                 stroke="#3b82f6"
+                                 strokeWidth={2}
+                                 fill="#3b82f6"
+                                 fillOpacity={0.15}
+                             />
+                         )}
 
                         <Line yAxisId="teplota" type="monotone" dataKey="Teplota"
                             stroke="#1f77b4" strokeWidth={2}
