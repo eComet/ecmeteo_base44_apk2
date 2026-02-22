@@ -313,36 +313,33 @@ export default function ThpChart({ timestamps, series }) {
                             yAxisId="teplota"
                             orientation="left"
                             domain={[tepMin, tepMax]}
-                            ticks={tepTicks}
-                            tick={{ fontSize: 11, fill: '#1f77b4' }}
+                            ticks={[...tepTicks, ...tepMinorTicks].sort((a, b) => a - b)}
+                            tick={makeCustomTick(tepTicks, '#1f77b4', v => `${Math.round(v)} °C`, 'left')}
                             axisLine={{ stroke: '#1f77b4' }}
-                            tickLine={{ stroke: '#1f77b4', strokeWidth: 1 }}
+                            tickLine={false}
                             width={70}
-                            tickFormatter={v => `${Math.round(v)} °C`}
                             label={{ value: 'Teplota (°C)', angle: -90, position: 'insideLeft', offset: 15, fill: '#1f77b4', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="vlhkost"
                             orientation="right"
                             domain={[vlhMin, vlhMax]}
-                            ticks={vlhTicks}
-                            tick={{ fontSize: 11, fill: '#ff7f0e' }}
+                            ticks={[...vlhTicks, ...vlhMinorTicks].sort((a, b) => a - b)}
+                            tick={makeCustomTick(vlhTicks, '#ff7f0e', v => `${Math.round(v)} %`, 'right')}
                             axisLine={{ stroke: '#ff7f0e' }}
-                            tickLine={{ stroke: '#ff7f0e', strokeWidth: 1 }}
+                            tickLine={false}
                             width={65}
-                            tickFormatter={v => `${Math.round(v)} %`}
                             label={{ value: 'Vlhkosť (%)', angle: 90, position: 'insideRight', offset: 15, fill: '#ff7f0e', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="tlak"
                             orientation="right"
                             domain={[tlakMin, tlakMax]}
-                            ticks={tlakTicks}
-                            tick={{ fontSize: 11, fill: '#2ca02c' }}
+                            ticks={[...tlakTicks, ...tlakMinorTicks].sort((a, b) => a - b)}
+                            tick={makeCustomTick(tlakTicks, '#2ca02c', v => `${Math.round(v)} hPa`, 'right')}
                             axisLine={{ stroke: '#2ca02c' }}
-                            tickLine={{ stroke: '#2ca02c', strokeWidth: 1 }}
+                            tickLine={false}
                             width={85}
-                            tickFormatter={v => `${Math.round(v)} hPa`}
                             label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
                         />
 
