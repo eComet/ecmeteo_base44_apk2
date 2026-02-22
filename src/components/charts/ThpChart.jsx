@@ -93,16 +93,6 @@ export default function ThpChart({ timestamps, series }) {
     function makeTicks(niceMin, step, steps) {
         return Array.from({ length: steps }, (_, i) => niceMin + i * step);
     }
-    function makeMinorTicks(niceMin, step, steps, minorCount) {
-        const ticks = [];
-        const minorStep = step / (minorCount + 1);
-        for (let i = 0; i < steps - 1; i++) {
-            for (let j = 1; j <= minorCount; j++) {
-                ticks.push(niceMin + i * step + j * minorStep);
-            }
-        }
-        return ticks;
-    }
 
     const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
     const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
@@ -122,31 +112,6 @@ export default function ThpChart({ timestamps, series }) {
     const tepTicks  = makeTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT);
     const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
     const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
-
-    const tepMinorTicks  = makeMinorTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT, 4);
-    const vlhMinorTicks  = makeMinorTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT, 4);
-    const tlakMinorTicks = makeMinorTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT, 4);
-
-    // Custom tick: major ticks show label + longer line, minor ticks show only a short line
-    const makeCustomTick = (majorTicks, color, formatter, side = 'left') =>
-        ({ x, y, payload }) => {
-            const isMajor = majorTicks.some(t => Math.abs(t - payload.value) < 0.001);
-            const tickLen = isMajor ? 6 : 3;
-            const x1 = side === 'left' ? x : x;
-            const x2 = side === 'left' ? x - tickLen : x + tickLen;
-            return (
-                <g>
-                    <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={1} />
-                    {isMajor && (
-                        <text x={side === 'left' ? x - 8 : x + 8} y={y} dy="0.35em"
-                            textAnchor={side === 'left' ? 'end' : 'start'}
-                            fill={color} fontSize={11}>
-                            {formatter(payload.value)}
-                        </text>
-                    )}
-                </g>
-            );
-        };
 
     // Save chart as PNG
     const handleSave = useCallback(() => {
@@ -313,33 +278,36 @@ export default function ThpChart({ timestamps, series }) {
                             yAxisId="teplota"
                             orientation="left"
                             domain={[tepMin, tepMax]}
-                            ticks={[...tepTicks, ...tepMinorTicks].sort((a, b) => a - b)}
-                            tick={makeCustomTick(tepTicks, '#1f77b4', v => `${Math.round(v)} °C`, 'left')}
+                            ticks={tepTicks}
+                            tick={{ fontSize: 11, fill: '#1f77b4' }}
                             axisLine={{ stroke: '#1f77b4' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#1f77b4', strokeWidth: 1 }}
                             width={70}
+                            tickFormatter={v => `${Math.round(v)} °C`}
                             label={{ value: 'Teplota (°C)', angle: -90, position: 'insideLeft', offset: 15, fill: '#1f77b4', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="vlhkost"
                             orientation="right"
                             domain={[vlhMin, vlhMax]}
-                            ticks={[...vlhTicks, ...vlhMinorTicks].sort((a, b) => a - b)}
-                            tick={makeCustomTick(vlhTicks, '#ff7f0e', v => `${Math.round(v)} %`, 'right')}
+                            ticks={vlhTicks}
+                            tick={{ fontSize: 11, fill: '#ff7f0e' }}
                             axisLine={{ stroke: '#ff7f0e' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#ff7f0e', strokeWidth: 1 }}
                             width={65}
+                            tickFormatter={v => `${Math.round(v)} %`}
                             label={{ value: 'Vlhkosť (%)', angle: 90, position: 'insideRight', offset: 15, fill: '#ff7f0e', fontSize: 11 }}
                         />
                         <YAxis
                             yAxisId="tlak"
                             orientation="right"
                             domain={[tlakMin, tlakMax]}
-                            ticks={[...tlakTicks, ...tlakMinorTicks].sort((a, b) => a - b)}
-                            tick={makeCustomTick(tlakTicks, '#2ca02c', v => `${Math.round(v)} hPa`, 'right')}
+                            ticks={tlakTicks}
+                            tick={{ fontSize: 11, fill: '#2ca02c' }}
                             axisLine={{ stroke: '#2ca02c' }}
-                            tickLine={false}
+                            tickLine={{ stroke: '#2ca02c', strokeWidth: 1 }}
                             width={85}
+                            tickFormatter={v => `${Math.round(v)} hPa`}
                             label={{ value: 'Tlak (hPa)', angle: 90, position: 'insideRight', offset: 15, fill: '#2ca02c', fontSize: 11 }}
                         />
 
