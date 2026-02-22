@@ -124,6 +124,29 @@ export default function ThpChart({ timestamps, series }) {
     const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.max,  vlhDomain.step);
     const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.max, tlakDomain.step);
 
+    // Min/Max points for visible data
+    function findMinMax(key) {
+        const valid = data.filter(d => d[key] != null);
+        if (!valid.length) return { min: null, max: null };
+        const maxPt = valid.reduce((a, b) => b[key] > a[key] ? b : a);
+        const minPt = valid.reduce((a, b) => b[key] < a[key] ? b : a);
+        return { min: minPt, max: maxPt };
+    }
+    const tepMM  = findMinMax('Teplota');
+    const vlhMM  = findMinMax('Vlhkosť');
+    const tlakMM = findMinMax('Tlak');
+
+    const MinMaxDot = ({ cx, cy, value, unit, decimals = 2 }) => {
+        if (cx == null || cy == null || value == null) return null;
+        const label = `${value.toFixed(decimals)} ${unit}`;
+        return (
+            <g>
+                <circle cx={cx} cy={cy} r={5} fill="#ef4444" stroke="#fff" strokeWidth={1.5} />
+                <text x={cx} y={cy - 9} textAnchor="middle" fontSize={10} fill="#ef4444" fontWeight="600">{label}</text>
+            </g>
+        );
+    };
+
     // Save chart as PNG
     const handleSave = useCallback(() => {
         const svgEl = chartRef.current?.querySelector('svg');
