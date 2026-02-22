@@ -180,8 +180,11 @@ export default function PmChart({ timestamps, series }) {
     };
     const handleMouseMove = (e) => {
         if (activeTool === 'zoom' && isSelecting.current) {
-            const r = getXFracTs(e); if (!r) return;
-            setZoomArea(prev => ({ ...prev, x2: r.tsVal }));
+            const chart = e.currentTarget.querySelector('.recharts-wrapper');
+            if (!chart) return;
+            const rect = chart.getBoundingClientRect();
+            const xPx = e.clientX - rect.left;
+            setZoomArea(prev => ({ ...prev, x2: xPx }));
         }
         if (activeTool === 'pan' && panStart.current !== null) {
             const chart = e.currentTarget.querySelector('.recharts-wrapper');
