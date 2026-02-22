@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { RefreshCw, CloudRain, AlertCircle, Clock } from 'lucide-react';
+import { RefreshCw, CloudRain, AlertCircle, Clock, RotateCw } from 'lucide-react';
 import { format } from 'date-fns';
 import ThpChart from '../components/charts/ThpChart';
 import PmChart from '../components/charts/PmChart';
