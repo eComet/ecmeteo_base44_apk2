@@ -112,14 +112,14 @@ export default function Home() {
 
                 {/* Expanded chart view */}
                 {!loading && !error && data && expandedChart && (
-                    <div>
+                    <div className="flex flex-col items-center justify-center min-h-screen lg:min-h-auto">
                         <button
                             onClick={() => setExpandedChart(null)}
                             className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors"
                         >
                             ← Späť na výber grafov
                         </button>
-                        <div className="grid grid-cols-1 gap-6">
+                        <div className="w-full">
                             {expandedChart === 'thp' && <ThpChart timestamps={timestamps} series={chartsById['thp']?.series} />}
                             {expandedChart === 'pm' && <PmChart timestamps={timestamps} series={chartsById['pm']?.series} />}
                             {expandedChart === 'light' && <LightChart timestamps={timestamps} series={chartsById['light']?.series} />}
