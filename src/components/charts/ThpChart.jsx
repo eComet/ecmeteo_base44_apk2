@@ -286,7 +286,7 @@ export default function ThpChart({ timestamps, series }) {
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 col-span-1 lg:col-span-2 relative">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 col-span-1 lg:col-span-2 relative landscape:p-3">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Graf Teplota / Vlhkosť / Tlak</h2>
 
             <ChartToolbar
