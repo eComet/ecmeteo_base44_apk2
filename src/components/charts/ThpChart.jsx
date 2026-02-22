@@ -80,12 +80,38 @@ export default function ThpChart({ timestamps, series }) {
     const nonNullVlh  = vlhData.filter(v => v != null);
     const nonNullTlak = tlakData.filter(v => v != null);
 
-    const tepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
-    const tepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
-    const vlhMin  = nonNullVlh.length  ? Math.min(...nonNullVlh)  - 2  : 0;
-    const vlhMax  = nonNullVlh.length  ? Math.max(...nonNullVlh)  + 2  : 105;
-    const tlakMin = nonNullTlak.length ? Math.min(...nonNullTlak) - 1  : 990;
-    const tlakMax = nonNullTlak.length ? Math.max(...nonNullTlak) + 1  : 1030;
+    const TICK_COUNT = 8;
+
+    // Round domain to nice integers and compute evenly-spaced ticks
+    function niceDomain(min, max, steps) {
+        const niceMin = Math.floor(min);
+        const niceMax = Math.ceil(max);
+        const step = Math.ceil((niceMax - niceMin) / (steps - 1));
+        const adjMax = niceMin + step * (steps - 1);
+        return { min: niceMin, max: adjMax, step };
+    }
+    function makeTicks(niceMin, step, steps) {
+        return Array.from({ length: steps }, (_, i) => niceMin + i * step);
+    }
+
+    const rawTepMin  = nonNullTep.length  ? Math.min(...nonNullTep)  - 1  : -5;
+    const rawTepMax  = nonNullTep.length  ? Math.max(...nonNullTep)  + 1  : 40;
+    const rawVlhMin  = nonNullVlh.length  ? Math.min(...nonNullVlh)  - 2  : 0;
+    const rawVlhMax  = nonNullVlh.length  ? Math.max(...nonNullVlh)  + 2  : 105;
+    const rawTlakMin = nonNullTlak.length ? Math.min(...nonNullTlak) - 1  : 990;
+    const rawTlakMax = nonNullTlak.length ? Math.max(...nonNullTlak) + 1  : 1030;
+
+    const tepDomain  = niceDomain(rawTepMin,  rawTepMax,  TICK_COUNT);
+    const vlhDomain  = niceDomain(rawVlhMin,  rawVlhMax,  TICK_COUNT);
+    const tlakDomain = niceDomain(rawTlakMin, rawTlakMax, TICK_COUNT);
+
+    const tepMin  = tepDomain.min;  const tepMax  = tepDomain.max;
+    const vlhMin  = vlhDomain.min;  const vlhMax  = vlhDomain.max;
+    const tlakMin = tlakDomain.min; const tlakMax = tlakDomain.max;
+
+    const tepTicks  = makeTicks(tepDomain.min,  tepDomain.step,  TICK_COUNT);
+    const vlhTicks  = makeTicks(vlhDomain.min,  vlhDomain.step,  TICK_COUNT);
+    const tlakTicks = makeTicks(tlakDomain.min, tlakDomain.step, TICK_COUNT);
 
     // Save chart as PNG
     const handleSave = useCallback(() => {
