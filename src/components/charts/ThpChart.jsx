@@ -261,7 +261,7 @@ export default function ThpChart({ timestamps, series }) {
             >
                 <ResponsiveContainer width="100%" height={350}>
                     <ComposedChart data={data} margin={{ top: 10, right: 80, left: 10, bottom: 30 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                        <CartesianGrid strokeDasharray="2 2" stroke="#e5e7eb" horizontal={true} vertical={true} />
 
                         <XAxis
                             dataKey="ts"
