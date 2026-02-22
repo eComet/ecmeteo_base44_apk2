@@ -59,6 +59,34 @@ export default function PmChart({ timestamps, series }) {
         'PM10':  pm10?.data[i]  ?? null,
     }));
 
+    function shadeColor(hex, isMax) {
+        const r = parseInt(hex.slice(1,3),16);
+        const g = parseInt(hex.slice(3,5),16);
+        const b = parseInt(hex.slice(5,7),16);
+        const [tr,tg,tb] = isMax ? [0,0,0] : [255,255,255];
+        const f = 0.45;
+        return `rgb(${Math.round(r+(tr-r)*f)},${Math.round(g+(tg-g)*f)},${Math.round(b+(tb-b)*f)})`;
+    }
+
+    function findMinMax(key) {
+        const valid = data.filter(d => d[key] != null);
+        if (!valid.length) return { min: null, max: null };
+        const maxPt = valid.reduce((a, b) => b[key] > a[key] ? b : a);
+        const minPt = valid.reduce((a, b) => b[key] < a[key] ? b : a);
+        return { min: minPt, max: maxPt };
+    }
+
+    const MinMaxDot = ({ cx, cy, value, unit, color, isMax }) => {
+        if (cx == null || cy == null || value == null) return null;
+        const dotColor = shadeColor(color, isMax);
+        return (
+            <g>
+                <circle cx={cx} cy={cy} r={5} fill={dotColor} stroke="#fff" strokeWidth={1.5} />
+                <text x={cx} y={cy - 9} textAnchor="middle" fontSize={10} fill={dotColor} fontWeight="600">{value.toFixed(0)} {unit}</text>
+            </g>
+        );
+    };
+
     const data = zoomRange
         ? allData.filter(d => { const ms = parseTs(d.ts); return ms >= zoomRange.start && ms <= zoomRange.end; })
         : allData;
