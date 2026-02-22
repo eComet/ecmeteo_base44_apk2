@@ -139,7 +139,7 @@ export default function PmChart({ timestamps, series }) {
 
     const PM_COLORS = { 'PM1.0': '#1f77b4', 'PM2.5': '#ff7f0e', 'PM10': '#2ca02c' };
     const CustomLegend = () => (
-        <div style={{ display: 'flex', gap: '16px', paddingLeft: '60px', paddingBottom: '2px', paddingTop: '4px' }}>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', paddingBottom: '2px', paddingTop: '4px' }}>
             {['PM1.0', 'PM2.5', 'PM10'].map(key => {
                 const hidden = hiddenSeries[key];
                 return (
