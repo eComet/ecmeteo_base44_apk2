@@ -5,7 +5,7 @@ export default function OrientationController({ preferredOrientation = 'landscap
         const lockOrientation = async () => {
             try {
                 if (screen.orientation && screen.orientation.lock) {
-                    await screen.orientation.lock(preferredOrientation);
+                    await screen.orientation.lock('any');
                 }
             } catch (error) {
                 console.log('Orientation lock not supported or failed:', error);
