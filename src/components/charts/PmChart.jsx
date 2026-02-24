@@ -239,7 +239,8 @@ export default function PmChart({ timestamps, series }) {
             />
             <div ref={chartRef} style={{ cursor, userSelect: 'none' }}
                 onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+                onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}
+                onDoubleClick={handleDoubleClick}>
                 <ResponsiveContainer width="100%" height={320}>
                     <LineChart data={data} margin={{ top: 8, right: 30, left: 10, bottom: 30 }}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
