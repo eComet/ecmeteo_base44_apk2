@@ -283,6 +283,26 @@ export default function ThpChart({ timestamps, series }) {
         }
     };
 
+    const handleDoubleClick = (e) => {
+        const chart = e.currentTarget.querySelector('.recharts-wrapper');
+        if (!chart) return;
+        const rect = chart.getBoundingClientRect();
+        const xFrac = (e.clientX - rect.left) / rect.width;
+        const visibleTs = data.map(d => parseTs(d.ts));
+        const tsMin = Math.min(...visibleTs);
+        const tsMax = Math.max(...visibleTs);
+        const tsClick = tsMin + xFrac * (tsMax - tsMin);
+        const span = (tsMax - tsMin) * 0.3;
+        const allTs = allData.map(d => parseTs(d.ts));
+        const totalMin = Math.min(...allTs);
+        const totalMax = Math.max(...allTs);
+        let newStart = tsClick - span / 2;
+        let newEnd = tsClick + span / 2;
+        if (newStart < totalMin) { newStart = totalMin; newEnd = Math.min(totalMin + span, totalMax); }
+        if (newEnd > totalMax) { newEnd = totalMax; newStart = Math.max(totalMax - span, totalMin); }
+        setZoomRange({ start: newStart, end: newEnd });
+    };
+
     const cursor = activeTool === 'pan' ? 'grab' : activeTool === 'zoom' ? 'crosshair' : 'default';
 
     return (
