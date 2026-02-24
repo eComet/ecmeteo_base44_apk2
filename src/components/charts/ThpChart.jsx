@@ -329,6 +329,7 @@ export default function ThpChart({ timestamps, series }) {
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
+                onDoubleClick={handleDoubleClick}
             >
                 <ResponsiveContainer width="100%" height={350}>
                     <ComposedChart data={data} margin={{ top: 10, right: 80, left: 10, bottom: 30 }}>
